@@ -18,20 +18,20 @@ public class questionService {
         this.questionDao = questionDao;
     }
 
-    public Question addQuestion(Question question) {
-        return questionDao.add(question).get();
+    public void addQuestion(Question question) {
+        questionDao.add(question);
     }
 
     public Question getQuestionById(int id) {
-        return questionDao.find(id).get();
+        return questionDao.find(id);
     }
 
     public void removeQuestionById(int id) {
         questionDao.remove(id);
     }
 
-    public Question updateQuestionById(int id, Question question) {
-        return questionDao.update(id, question).get();
+    public void updateQuestionById(int id, Question question) {
+        questionDao.update(id, question);
     }
 
     public List<Question> getAllQuestion() {

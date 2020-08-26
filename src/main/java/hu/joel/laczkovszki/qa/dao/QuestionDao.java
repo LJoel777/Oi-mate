@@ -8,13 +8,13 @@ import java.util.Optional;
 
 @Component
 public interface QuestionDao {
-    Optional<Question> add(Question question);
+    void add(Question question);
 
-    Optional<Question> find(int id);
+    Question find(int id);
 
     void remove(int id);
 
-    Optional<Question> update(int id, Question question);
+    void update(int id, Question question);
 
     List<Question> getAll();
 }
