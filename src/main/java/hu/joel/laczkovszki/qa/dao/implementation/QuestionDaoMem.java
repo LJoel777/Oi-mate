@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class QuestionDaoMem implements QuestionDao {
@@ -23,7 +22,7 @@ public class QuestionDaoMem implements QuestionDao {
         return questions.stream()
                 .filter((question -> question.getId() == id))
                 .findFirst()
-                .orElseThrow(() -> new ApiRequestException("Id not found" + "(" + id + ")"));
+                .orElseThrow(() -> new ApiRequestException("Question id not found" + "(" + id + ")"));
     }
 
     @Override
@@ -31,17 +30,15 @@ public class QuestionDaoMem implements QuestionDao {
         questions.remove(questions.stream()
                 .filter((question -> question.getId() == id))
                 .findFirst()
-                .orElseThrow(() -> new ApiRequestException("Id not found" + "(" + id + ")")));
+                .orElseThrow(() -> new ApiRequestException("Question id not found" + "(" + id + ")")));
     }
 
     @Override
     public void update(int id, Question updatedQuestion) {
-        Optional<Question> question = Optional.ofNullable(find(id));
-        if (question.isPresent()) {
-            remove(id);
-            updatedQuestion.setId(id);
-            questions.add(updatedQuestion);
-        }
+        Question question = find(id);
+        remove(id);
+        updatedQuestion.setId(id);
+        questions.add(updatedQuestion);
     }
 
     @Override

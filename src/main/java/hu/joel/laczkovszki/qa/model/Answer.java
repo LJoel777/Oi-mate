@@ -1,21 +1,20 @@
 package hu.joel.laczkovszki.qa.model;
 
-import java.util.UUID;
-
 public class Answer {
     private static int idCounter;
     private int id;
     private String description;
-    private String imgPath;
-    private int questionID;
+    private String imagePath;
+    private int questionId;
 
-    public Answer(String description) {
+    public Answer(String description, int questionId) {
         this.description = description;
+        this.questionId = questionId;
         id = idCounter++;
     }
 
-    public int getQuestionID() {
-        return questionID;
+    public int getQuestionId() {
+        return questionId;
     }
 
     public int getId() {
@@ -31,10 +30,18 @@ public class Answer {
     }
 
     public String getImgPath() {
-        return imgPath;
+        return imagePath;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setImgPath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

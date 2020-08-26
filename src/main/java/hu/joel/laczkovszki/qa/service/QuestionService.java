@@ -7,15 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class questionService {
+public class QuestionService {
     private QuestionDao questionDao;
+    private AnswerService answerService;
 
     @Autowired
-    public questionService(QuestionDaoMem questionDao) {
+    public QuestionService(QuestionDaoMem questionDao, AnswerService answerService) {
         this.questionDao = questionDao;
+        this.answerService = answerService;
     }
 
     public void addQuestion(Question question) {
@@ -27,6 +28,7 @@ public class questionService {
     }
 
     public void removeQuestionById(int id) {
+        answerService.removeAnswersByQuestionId(id);
         questionDao.remove(id);
     }
 

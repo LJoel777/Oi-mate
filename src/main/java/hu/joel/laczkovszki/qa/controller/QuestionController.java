@@ -1,7 +1,7 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
-import hu.joel.laczkovszki.qa.service.questionService;
+import hu.joel.laczkovszki.qa.service.QuestionService;
 import hu.joel.laczkovszki.qa.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +10,11 @@ import java.util.List;
 
 
 @RestController
-public class QAndAController {
-    private questionService questionService;
+public class QuestionController {
+    private QuestionService questionService;
 
     @Autowired
-    public void setQuestionService(questionService questionService) {
+    public void setQuestionService(QuestionService questionService) {
         this.questionService = questionService;
     }
 
@@ -39,7 +39,8 @@ public class QAndAController {
     }
 
     @GetMapping("question/{id}/remove")
-    public void removeQuestion(@PathVariable("id") int id) {
+    public String removeQuestion(@PathVariable("id") int id) {
         questionService.removeQuestionById(id);
+        return "/answersByQuestionId/{questionId}/remove";
     }
 }

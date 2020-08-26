@@ -1,6 +1,5 @@
 package hu.joel.laczkovszki.qa.model;
 
-import java.util.UUID;
 
 
 public class Question {
