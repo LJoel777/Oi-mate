@@ -7,8 +7,9 @@ public class Answer {
     private String imagePath;
     private int questionId;
 
-    public Answer(String description, int questionId) {
+    public Answer(String description, String imagePath, int questionId) {
         this.description = description;
+        this.imagePath = imagePath;
         this.questionId = questionId;
         id = idCounter++;
     }

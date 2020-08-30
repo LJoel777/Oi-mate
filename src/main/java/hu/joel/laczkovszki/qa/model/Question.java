@@ -9,9 +9,16 @@ public class Question {
     private String description;
     private String imagePath;
 
-    public Question(String title, String description) {
+//    public Question(String title, String description) {
+//        this.title = title;
+//        this.description = description;
+//        id = idCounter++;
+//    }
+
+    public Question(String title, String description, String imagePath) {
         this.title = title;
         this.description = description;
+        this.imagePath = imagePath;
         id = idCounter++;
     }
 

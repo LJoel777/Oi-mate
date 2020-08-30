@@ -3,6 +3,7 @@ package hu.joel.laczkovszki.qa.service;
 import hu.joel.laczkovszki.qa.dao.QuestionDao;
 import hu.joel.laczkovszki.qa.dao.implementation.QuestionDaoMem;
 import hu.joel.laczkovszki.qa.model.Question;
+import hu.joel.laczkovszki.qa.testData.TestQuestionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,13 @@ import java.util.List;
 
 @Service
 public class QuestionService {
-    private QuestionDao questionDao;
-    private AnswerService answerService;
+    private final QuestionDao questionDao;
+    private final AnswerService answerService;
 
     @Autowired
     public QuestionService(QuestionDaoMem questionDao, AnswerService answerService) {
         this.questionDao = questionDao;
+        QuestionDaoMem.setQuestions(TestQuestionData.questionList);
         this.answerService = answerService;
     }
 

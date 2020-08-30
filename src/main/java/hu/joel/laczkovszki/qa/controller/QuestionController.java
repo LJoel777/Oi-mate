@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class QuestionController {
     private QuestionService questionService;
@@ -29,8 +29,9 @@ public class QuestionController {
     }
 
     @PostMapping("/question/add")
-    public void addQuestion(@RequestBody Question question) {
+    public int addQuestion(@RequestBody Question question) {
         questionService.addQuestion(question);
+        return question.getId();
     }
 
     @PostMapping("/question/{id}/update")

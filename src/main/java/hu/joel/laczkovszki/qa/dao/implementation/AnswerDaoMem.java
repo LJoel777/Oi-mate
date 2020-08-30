@@ -7,14 +7,18 @@ import hu.joel.laczkovszki.qa.model.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class AnswerDaoMem implements AnswerDao {
-    private static List<Answer> answers = new ArrayList<>();
-    private QuestionDao questionDao;
+    private static List<Answer> answers;
+    private final QuestionDao questionDao;
+
+    @Autowired
+    public static void setAnswers(List<Answer> answers) {
+        AnswerDaoMem.answers = answers;
+    }
 
     @Autowired
     public AnswerDaoMem(QuestionDao questionDao) {
