@@ -6,7 +6,6 @@ import hu.joel.laczkovszki.qa.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -41,7 +40,6 @@ public class QuestionDaoMem implements QuestionDao {
 
     @Override
     public void update(int id, Question updatedQuestion) {
-        Question question = find(id);
         remove(id);
         updatedQuestion.setId(id);
         questions.add(updatedQuestion);
