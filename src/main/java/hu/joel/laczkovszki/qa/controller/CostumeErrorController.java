@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CostumeErrorController implements ErrorController {
-    private ApiExceptionHandler apiExceptionHandler;
+    private final ApiExceptionHandler apiExceptionHandler;
 
     @Autowired
     public CostumeErrorController(ApiExceptionHandler apiExceptionHandler) {
