@@ -7,6 +7,9 @@ import java.util.List;
 
 public class TestUserData {
     public static List<User> userList = new ArrayList<>(){{
-        add(new User("werneerm","almafa","asd@asd.com","Mark","Werner",""));
+        List<String> hobbies = new ArrayList<>();
+        hobbies.add("designing");
+        hobbies.add("gaming");
+        add(new User("werneerm","almafa","asd@asd.com","Mark","Werner","", hobbies));
     }};
 }

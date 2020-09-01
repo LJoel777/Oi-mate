@@ -50,4 +50,9 @@ public class UserController {
 
         return false;
     }
+
+    @GetMapping("/user/{id}")
+    public User getUser (@PathVariable("id") int id) {
+        return userService.getUser(id);
+    }
 }
