@@ -3,7 +3,7 @@ package hu.joel.laczkovszki.qa.daoTests;
 import static org.junit.Assert.*;
 
 import hu.joel.laczkovszki.qa.dao.AnswerDao;
-import hu.joel.laczkovszki.qa.dao.QuestionDao;
+import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.dao.implementation.AnswerDaoMem;
 import hu.joel.laczkovszki.qa.dao.implementation.QuestionDaoMem;
 import static org.mockito.Mockito.*;
@@ -20,12 +20,12 @@ import java.util.ArrayList;
 @SpringBootTest
 public class AnswerDaoMemTest {
     AnswerDao answerDao;
-    QuestionDao questionDao;
+    CRUDInterface<Question> questionDao;
 
     @BeforeEach
     public void init() {
         questionDao = mock(QuestionDaoMem.class);
-        answerDao = new AnswerDaoMem(questionDao);
+        answerDao = new AnswerDaoMem((QuestionDaoMem) questionDao);
         AnswerDaoMem.setAnswers(new ArrayList<>());
     }
 

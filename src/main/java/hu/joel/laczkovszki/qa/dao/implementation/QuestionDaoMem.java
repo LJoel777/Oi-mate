@@ -1,16 +1,14 @@
 package hu.joel.laczkovszki.qa.dao.implementation;
 
-import hu.joel.laczkovszki.qa.dao.QuestionDao;
+import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class QuestionDaoMem implements QuestionDao {
+public class QuestionDaoMem implements CRUDInterface<Question> {
     private static List<Question> questions;
 
     @Autowired
