@@ -1,9 +1,10 @@
 package hu.joel.laczkovszki.qa.dao.implementation;
 
 import hu.joel.laczkovszki.qa.dao.AnswerDao;
-import hu.joel.laczkovszki.qa.dao.QuestionDao;
+import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.Answer;
+import hu.joel.laczkovszki.qa.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class AnswerDaoMem implements AnswerDao {
     private static List<Answer> answers;
-    private final QuestionDao questionDao;
+    private final CRUDInterface<Question> questionDao;
 
     @Autowired
     public static void setAnswers(List<Answer> answers) {
@@ -21,7 +22,7 @@ public class AnswerDaoMem implements AnswerDao {
     }
 
     @Autowired
-    public AnswerDaoMem(QuestionDao questionDao) {
+    public AnswerDaoMem(QuestionDaoMem questionDao) {
         this.questionDao = questionDao;
     }
 
@@ -54,6 +55,11 @@ public class AnswerDaoMem implements AnswerDao {
         remove(id);
         updateAnswer.setId(id);
         answers.add(updateAnswer);
+    }
+
+    @Override
+    public List<Answer> getAll() {
+        return null;
     }
 
     @Override

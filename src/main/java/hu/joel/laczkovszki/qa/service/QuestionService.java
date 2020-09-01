@@ -1,6 +1,6 @@
 package hu.joel.laczkovszki.qa.service;
 
-import hu.joel.laczkovszki.qa.dao.QuestionDao;
+import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.dao.implementation.QuestionDaoMem;
 import hu.joel.laczkovszki.qa.model.Question;
 import hu.joel.laczkovszki.qa.testData.TestQuestionData;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class QuestionService {
-    private final QuestionDao questionDao;
+    private final CRUDInterface<Question> questionDao;
     private final AnswerService answerService;
 
     @Autowired
