@@ -6,6 +6,8 @@ import hu.joel.laczkovszki.qa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +28,26 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void loginVerification(@RequestBody Map<String,String> login){
-        System.out.println(login.get("email"));
-        System.out.println(login.get("password"));
+    public void loginVerification(@RequestBody Map<String,String> login , HttpSession httpSession){
+        String email = login.get("email");
+        String psw = login.get("password");
+        if (loginValidater(email, psw)) {
+            httpSession.setAttribute("isValid", "valid");
+            try {
+                httpSession.setAttribute("user", email);
+                response.sendRedirect("/");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        else{
+            response.sendRedirect("/registration");
+        }
+    }
+
+    private boolean loginValidater(String email,String psw){
+
+        return false;
     }
 }
