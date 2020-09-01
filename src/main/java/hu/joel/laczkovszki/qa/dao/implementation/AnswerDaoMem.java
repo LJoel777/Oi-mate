@@ -46,14 +46,12 @@ public class AnswerDaoMem implements AnswerDao {
         answers.remove(answers.stream()
                 .filter((answer -> answer.getId() == id))
                 .findFirst()
-                .orElseThrow(() -> new ApiRequestException("Answer id found" + "(" + id + ")")));
+                .orElseThrow(() -> new ApiRequestException("Answer id not found" + "(" + id + ")")));
     }
 
     @Override
     public void update(int id, Answer updateAnswer) {
-        Answer answer = find(id);
-        int questionId = updateAnswer.getQuestionId();
-        questionDao.find(questionId);
+        find(id);
         remove(id);
         updateAnswer.setId(id);
         answers.add(updateAnswer);
@@ -77,6 +75,6 @@ public class AnswerDaoMem implements AnswerDao {
         List<Answer> deletedAnswers = answers.stream()
                 .filter((answer -> answer.getQuestionId() == questionId)).collect(Collectors.toList());
         if (deletedAnswers.size() > 0)
-            deletedAnswers.stream().forEach(answer -> remove(answer.getId()));
+            deletedAnswers.forEach(answer -> remove(answer.getId()));
     }
 }

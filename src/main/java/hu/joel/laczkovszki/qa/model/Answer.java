@@ -5,7 +5,7 @@ public class Answer {
     private int id;
     private String description;
     private String imagePath;
-    private int questionId;
+    private final int questionId;
 
     public Answer(String description, String imagePath, int questionId) {
         this.description = description;
