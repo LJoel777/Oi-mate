@@ -1,12 +1,10 @@
 package hu.joel.laczkovszki.qa.daoTests;
 
-import hu.joel.laczkovszki.qa.dao.QuestionDao;
 import hu.joel.laczkovszki.qa.dao.implementation.QuestionDaoMem;
 import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.Assert.*;
 

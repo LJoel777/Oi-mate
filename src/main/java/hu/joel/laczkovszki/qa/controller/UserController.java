@@ -28,21 +28,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void loginVerification(@RequestBody Map<String,String> login , HttpSession httpSession){
+    public String loginVerification (@RequestBody Map<String,String> login , HttpSession httpSession){
         String email = login.get("email");
         String psw = login.get("password");
         if (loginValidater(email, psw)) {
             httpSession.setAttribute("isValid", "valid");
             try {
                 httpSession.setAttribute("user", email);
-                response.sendRedirect("/");
-            } catch (SQLException e) {
-                e.printStackTrace();
+                return "redirect:/";
             }
-
+            catch (Exception e){
+                System.out.println(e);
+                return "redirect:/";
+            }
         }
         else{
-            response.sendRedirect("/registration");
+            return "redirect:/registration";
         }
     }
 

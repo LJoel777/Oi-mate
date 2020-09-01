@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 @SpringBootTest
 public class AnswerDaoMemTest {
-    AnswerDao answerDao;
-    CRUDInterface<Question> questionDao;
+    AnswerDao answerDaoMem;
+    CRUDInterface<Question> questionDaoMem;
 
     @BeforeEach
     public void init() {
-        questionDao = mock(QuestionDaoMem.class);
-        answerDao = new AnswerDaoMem((QuestionDaoMem) questionDao);
+        questionDaoMem = mock(QuestionDaoMem.class);
+        answerDaoMem = new AnswerDaoMem((QuestionDaoMem) questionDaoMem);
         AnswerDaoMem.setAnswers(new ArrayList<>());
     }
 
