@@ -39,7 +39,6 @@ public class QuestionDaoMem implements CRUDInterface<Question> {
 
     @Override
     public void update(int id, Question updatedQuestion) {
-        Question question = find(id);
         remove(id);
         updatedQuestion.setId(id);
         questions.add(updatedQuestion);
