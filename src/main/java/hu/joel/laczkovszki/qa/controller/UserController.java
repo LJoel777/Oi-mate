@@ -30,4 +30,9 @@ public class UserController {
         System.out.println(login.get("email"));
         System.out.println(login.get("password"));
     }
+
+    @GetMapping("/user/{id}")
+    public User getUser (@PathVariable("id") int id) {
+        return userService.getUser(id);
+    }
 }

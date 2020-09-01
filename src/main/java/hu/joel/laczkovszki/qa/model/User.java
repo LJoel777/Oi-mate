@@ -1,24 +1,44 @@
 package hu.joel.laczkovszki.qa.model;
 
-import java.util.UUID;
+import java.util.List;
 
 public class User {
-    private UUID id;
+    private int id;
+
     private String userName;
     private String psw;
-    private String emailAdress;
+    private String emailAddress;
     private String firstName;
     private String lastName;
     private String profilePicture;
+    private List<String> fieldsOfInterest;
+    private static int idCounter = 0;
 
-    public User(String userName, String psw, String emailAdress, String firstName, String lastName, String profilePicture) {
+    public User(String userName, String psw, String emailAddress, String firstName, String lastName, String profilePicture, List<String> fieldsOfInterest) {
         this.userName = userName;
         this.psw = psw;
-        this.emailAdress = emailAdress;
+        this.emailAddress = emailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicture = profilePicture;
-        this.id = UUID.randomUUID();
+        this.fieldsOfInterest = fieldsOfInterest;
+        this.id = idCounter++;
+    }
+
+    public List<String> getFieldsOfInterest() {
+        return fieldsOfInterest;
+    }
+
+    public void setFieldsOfInterest(List<String> fieldsOfInterest) {
+        this.fieldsOfInterest = fieldsOfInterest;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -37,12 +57,12 @@ public class User {
         this.psw = psw;
     }
 
-    public String getEmailAdress() {
-        return emailAdress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmailAdress(String emailAdress) {
-        this.emailAdress = emailAdress;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getFirstName() {
