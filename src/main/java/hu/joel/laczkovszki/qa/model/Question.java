@@ -8,17 +8,21 @@ public class Question {
     private String title;
     private String description;
     private String imagePath;
+    private int userId;
 
-//    public Question(String title, String description) {
-//        this.title = title;
-//        this.description = description;
-//        id = idCounter++;
-//    }
+    public int getUserId() {
+        return userId;
+    }
 
-    public Question(String title, String description, String imagePath) {
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Question(String title, String description, String imagePath, int userId) {
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
+        this.userId = userId;
         id = idCounter++;
     }
 
