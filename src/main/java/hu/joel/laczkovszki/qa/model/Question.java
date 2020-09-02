@@ -1,6 +1,9 @@
 package hu.joel.laczkovszki.qa.model;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Question {
     private static int idCounter;
@@ -8,17 +11,23 @@ public class Question {
     private String title;
     private String description;
     private String imagePath;
+    private int userId;
+    private List<String> categories;
 
-//    public Question(String title, String description) {
-//        this.title = title;
-//        this.description = description;
-//        id = idCounter++;
-//    }
+    public int getUserId() {
+        return userId;
+    }
 
-    public Question(String title, String description, String imagePath) {
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Question(String title, String description, String imagePath, int userId, String[] categories) {
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
+        this.userId = userId;
+        this.categories = categories != null ? Arrays.asList(categories) : new ArrayList<>();
         id = idCounter++;
     }
 
@@ -52,5 +61,9 @@ public class Question {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public boolean checkCategory(String hobby) {
+        return categories.contains(hobby);
     }
 }
