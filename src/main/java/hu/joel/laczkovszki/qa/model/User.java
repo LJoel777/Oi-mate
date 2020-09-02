@@ -10,7 +10,7 @@ public class User {
     private String emailAddress;
     private String firstName;
     private String lastName;
-    private String profilePicture = "https://lh3.googleusercontent.com/proxy/ShuDBfPQfNl63y3eaigj4OR4TNdzoTQYUFkHj_SB4-7chXH0adj2TBBAn5eX9N3xRWi6JyuO1gXMmjmBBgvZUqpNJGovLcLtL8fiSVtJQ-yNQmbi8mH6Lpw";
+    private String profilePicture = "https://lh3.googleusercontent.com/proxy/0PjSFxSxbv2GiRKxCxez_Kq_UPLDZnMGOtB4ATH4TVKohc2Csdd0hCjnjJbJg7ZIAEEYraNGkuqCeKyTL1UqX6ko5LZvqTsdCQwNBxfJdsKSqPxcMyPwmRI";
     private List<String> fieldsOfInterest;
     private static int idCounter = 0;
 
