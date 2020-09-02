@@ -1,15 +1,16 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
+import hu.joel.laczkovszki.qa.dao.implementation.UserDaoMem;
+import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,28 +29,23 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginVerification (@RequestBody Map<String,String> login , HttpSession httpSession){
+    public boolean loginVerification (@RequestBody Map<String,String> login ){
         String email = login.get("email");
         String psw = login.get("password");
-        if (loginValidater(email, psw)) {
-            httpSession.setAttribute("isValid", "valid");
-            try {
-                httpSession.setAttribute("user", email);
-                return "redirect:/";
-            }
-            catch (Exception e){
-                System.out.println(e);
-                return "redirect:/";
-            }
-        }
-        else{
-            return "redirect:/registration";
-        }
+        return loginValidater(email, psw);
     }
 
     private boolean loginValidater(String email,String psw){
-
-        return false;
+        User user = userService.findByEmail(email);
+        try {
+          String  originalPsw = user.getPsw();
+            System.out.println(BCrypt.checkpw(psw,originalPsw));
+            return BCrypt.checkpw(psw,originalPsw);
+        }
+        catch (NullPointerException e){
+            System.out.println("catch");
+            return false;
+        }
     }
 
     @GetMapping("/user/{id}")

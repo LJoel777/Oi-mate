@@ -1,6 +1,8 @@
 package hu.joel.laczkovszki.qa.dao.implementation;
 
 import hu.joel.laczkovszki.qa.dao.CRUDInterface;
+import hu.joel.laczkovszki.qa.dao.UserDao;
+import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class UserDaoMem implements CRUDInterface<User> {
+public class UserDaoMem implements CRUDInterface<User> , UserDao {
     private static List<User> users;
 
     @Autowired
@@ -40,5 +42,10 @@ public class UserDaoMem implements CRUDInterface<User> {
     @Override
     public List<User> getAll() {
         return users;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return users.stream().filter(user -> user.getEmailAddress().equals(email)).findFirst().orElseThrow(()->new NullPointerException("No user found"));
     }
 }
