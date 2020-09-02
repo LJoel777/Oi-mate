@@ -1,15 +1,14 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
+import hu.joel.laczkovszki.qa.model.Session;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,28 +27,25 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginVerification (@RequestBody Map<String,String> login , HttpSession httpSession){
+    public Session loginVerification (@RequestBody Map<String,String> login ){
         String email = login.get("email");
         String psw = login.get("password");
-        if (loginValidater(email, psw)) {
-            httpSession.setAttribute("isValid", "valid");
-            try {
-                httpSession.setAttribute("user", email);
-                return "redirect:/";
-            }
-            catch (Exception e){
-                System.out.println(e);
-                return "redirect:/";
-            }
-        }
-        else{
-            return "redirect:/registration";
-        }
+        return loginValidater(email, psw);
     }
 
-    private boolean loginValidater(String email,String psw){
-
-        return false;
+    private Session loginValidater(String email,String psw){
+        User user = userService.findByEmail(email);
+        System.out.println(userService.getAllUsers());
+        int userID = user.getId();
+        try {
+          String  originalPsw = user.getPsw();
+            System.out.println("ELKÜLDI");
+            return new Session(BCrypt.checkpw(psw,originalPsw),userID);
+        }
+        catch (NullPointerException e){
+            System.out.println("catch");
+            return new Session(false,0);
+        }
     }
 
     @GetMapping("/user/{id}")
