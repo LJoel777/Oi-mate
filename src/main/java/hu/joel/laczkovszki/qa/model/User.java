@@ -10,7 +10,7 @@ public class User {
     private String emailAddress;
     private String firstName;
     private String lastName;
-    private String profilePicture;
+    private String profilePicture = "https://lh3.googleusercontent.com/proxy/ShuDBfPQfNl63y3eaigj4OR4TNdzoTQYUFkHj_SB4-7chXH0adj2TBBAn5eX9N3xRWi6JyuO1gXMmjmBBgvZUqpNJGovLcLtL8fiSVtJQ-yNQmbi8mH6Lpw";
     private List<String> fieldsOfInterest;
     private static int idCounter = 0;
 
@@ -20,7 +20,8 @@ public class User {
         this.emailAddress = emailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profilePicture = profilePicture;
+        if (!profilePicture.equals(""))
+            this.profilePicture = profilePicture;
         this.fieldsOfInterest = fieldsOfInterest;
         this.id = idCounter++;
     }

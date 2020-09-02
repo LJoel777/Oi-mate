@@ -1,14 +1,16 @@
 package hu.joel.laczkovszki.qa.dao.implementation;
 
 import hu.joel.laczkovszki.qa.dao.CRUDInterface;
+import hu.joel.laczkovszki.qa.dao.QuestionDao;
 import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
-public class QuestionDaoMem implements CRUDInterface<Question> {
+public class QuestionDaoMem implements QuestionDao {
     private static List<Question> questions;
 
     @Autowired
@@ -47,5 +49,10 @@ public class QuestionDaoMem implements CRUDInterface<Question> {
     @Override
     public List<Question> getAll() {
         return questions;
+    }
+
+    @Override
+    public List<Question> getAllQuestion_byUserId(int userId) {
+        return questions.stream().filter((question -> question.getUserId() == userId)).collect(Collectors.toList());
     }
 }

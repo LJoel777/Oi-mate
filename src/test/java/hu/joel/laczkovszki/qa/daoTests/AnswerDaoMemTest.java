@@ -33,7 +33,7 @@ public class AnswerDaoMemTest {
     @Test
     public void addAnswer_withExistingQuestionId() {
         int answerId = 0;
-        when(questionDaoMem.find(0)).thenReturn(new Question("test", "test", "test"));
+        when(questionDaoMem.find(0)).thenReturn(new Question("test", "test", "test", 0));
         Answer expectedAnswer = new Answer("Test", "test", 0);
         expectedAnswer.setId(answerId);
 

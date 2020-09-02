@@ -44,4 +44,9 @@ public class QuestionController {
         questionService.removeQuestionById(id);
         return "/answersByQuestionId/{questionId}/remove";
     }
+
+    @GetMapping("questions-by-user-id/{userId}")
+    public List<Question> getQuestions_byUserId(@PathVariable("userId") int userId) {
+        return questionService.getAllQuestion_byUserId(userId);
+    }
 }
