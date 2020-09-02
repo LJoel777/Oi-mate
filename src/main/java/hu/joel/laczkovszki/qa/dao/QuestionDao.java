@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface QuestionDao  extends CRUDInterface<Question> {
     List<Question> getAllQuestion_byUserId(int userId);
-
+  
     List<Question> getQuestionsByHobby(String hobby);
 }

@@ -70,7 +70,7 @@ public class QuestionDaoMemTest {
         Question question = new Question("test", "test", "test", 0, null);
         question.setId(id);
         questionDaoMem.add(question);
-        Question updateQuestion = new Question("updated", "updated", "updated", 0, null);
+        Question updateQuestion = new Question("updated", "updated", "updated", 0, null);p
         questionDaoMem.update(id, updateQuestion);
         assertEquals(updateQuestion, questionDaoMem.find(id));
     }

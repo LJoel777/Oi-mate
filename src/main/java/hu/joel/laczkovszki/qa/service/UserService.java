@@ -1,6 +1,5 @@
 package hu.joel.laczkovszki.qa.service;
 
-import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.dao.UserDao;
 import hu.joel.laczkovszki.qa.dao.implementation.UserDaoMem;
 import hu.joel.laczkovszki.qa.model.User;
