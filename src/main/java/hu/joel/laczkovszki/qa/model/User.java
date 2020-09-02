@@ -1,5 +1,6 @@
 package hu.joel.laczkovszki.qa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -12,9 +13,10 @@ public class User {
     private String lastName;
     private String profilePicture = "https://lh3.googleusercontent.com/proxy/ShuDBfPQfNl63y3eaigj4OR4TNdzoTQYUFkHj_SB4-7chXH0adj2TBBAn5eX9N3xRWi6JyuO1gXMmjmBBgvZUqpNJGovLcLtL8fiSVtJQ-yNQmbi8mH6Lpw";
     private List<String> fieldsOfInterest;
+    private List<Integer> friends;
     private static int idCounter = 0;
 
-    public User(String userName, String psw, String emailAddress, String firstName, String lastName, String profilePicture, List<String> fieldsOfInterest) {
+    public User(String userName, String psw, String emailAddress, String firstName, String lastName, String profilePicture, List<String> fieldsOfInterest, List<Integer> friends) {
         this.userName = userName;
         this.psw = psw;
         this.emailAddress = emailAddress;
@@ -23,6 +25,7 @@ public class User {
         if (!profilePicture.equals(""))
             this.profilePicture = profilePicture;
         this.fieldsOfInterest = fieldsOfInterest;
+        this.friends = friends != null ? friends : new ArrayList<>();
         this.id = idCounter++;
     }
 
@@ -88,5 +91,17 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<Integer> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Integer> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriend(Integer id) {
+        this.friends.add(id);
     }
 }

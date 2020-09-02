@@ -18,6 +18,16 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
+    @GetMapping("/hobby-news/{id}")
+    public List<Question> getQuestionByHobby (@PathVariable("id") int id) {
+        return questionService.getQuestionByHobby(id);
+    }
+
+    @GetMapping("/friend-news/{id}")
+    public List<Question> getQuestionsByFriend (@PathVariable("id") int id) {
+        return questionService.getQuestionByFriend(id);
+    }
+
     @GetMapping("/questions")
     public List<Question> getQuestions() {
         return questionService.getAllQuestion();

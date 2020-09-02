@@ -55,4 +55,9 @@ public class QuestionDaoMem implements QuestionDao {
     public List<Question> getAllQuestion_byUserId(int userId) {
         return questions.stream().filter((question -> question.getUserId() == userId)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Question> getQuestionsByHobby(String hobby) {
+        return questions.stream().filter(q -> q.checkCategory(hobby)).collect(Collectors.toList());
+    }
 }
