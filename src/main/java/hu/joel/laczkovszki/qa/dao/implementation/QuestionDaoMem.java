@@ -41,8 +41,10 @@ public class QuestionDaoMem implements QuestionDao {
 
     @Override
     public void update(int id, Question updatedQuestion) {
+        int userId = find(id).getUserId();
         remove(id);
         updatedQuestion.setId(id);
+        updatedQuestion.setUserId(userId);
         questions.add(updatedQuestion);
     }
 

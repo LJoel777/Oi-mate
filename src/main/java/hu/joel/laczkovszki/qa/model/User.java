@@ -11,7 +11,7 @@ public class User {
     private String emailAddress;
     private String firstName;
     private String lastName;
-    private String profilePicture = "https://lh3.googleusercontent.com/proxy/0PjSFxSxbv2GiRKxCxez_Kq_UPLDZnMGOtB4ATH4TVKohc2Csdd0hCjnjJbJg7ZIAEEYraNGkuqCeKyTL1UqX6ko5LZvqTsdCQwNBxfJdsKSqPxcMyPwmRI";
+    private String profilePicture = "https://www.bluedivineevents.com/wp-content/uploads/2018/07/profile.png";
     private List<String> fieldsOfInterest;
     private List<Integer> friends;
     private static int idCounter = 0;

@@ -5,8 +5,16 @@ public class Answer {
     private int id;
     private String description;
     private String imagePath;
-    private final int questionId;
-    private final int userId;
+    private  int questionId;
+    private  int userId;
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public int getUserId() {
         return userId;

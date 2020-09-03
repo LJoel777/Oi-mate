@@ -48,6 +48,5 @@ public class AnswerController {
     @GetMapping("/answersByQuestionId/{questionId}/remove")
     public void removeAnswersByQuestionId(@PathVariable("questionId") String questionId) {
         System.out.println(questionId);
-//        answerService.removeAnswersByQuestionId(questionId);
     }
 }

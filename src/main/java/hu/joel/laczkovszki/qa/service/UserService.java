@@ -47,6 +47,8 @@ public class UserService {
     }
 
     public void updateHobbies (Hobby hobby) {
-        getUser(hobby.getId()).setFieldsOfInterest(hobby.getFieldsOfInterest());
+        User user = getUser(hobby.getId());
+        user.setFieldsOfInterest(hobby.getFieldsOfInterest());
+
     }
 }

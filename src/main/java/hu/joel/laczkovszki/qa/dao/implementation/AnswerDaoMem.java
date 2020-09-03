@@ -51,9 +51,11 @@ public class AnswerDaoMem implements AnswerDao {
 
     @Override
     public void update(int id, Answer updateAnswer) {
-        find(id);
+        Answer answer = find(id);
         remove(id);
         updateAnswer.setId(id);
+        updateAnswer.setQuestionId(answer.getQuestionId());
+        updateAnswer.setUserId(answer.getUserId());
         answers.add(updateAnswer);
     }
 
