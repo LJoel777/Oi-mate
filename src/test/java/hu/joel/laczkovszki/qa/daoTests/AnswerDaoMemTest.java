@@ -29,17 +29,17 @@ public class AnswerDaoMemTest {
         answerDaoMem = new AnswerDaoMem((QuestionDaoMem) questionDaoMem);
         AnswerDaoMem.setAnswers(new ArrayList<>());
     }
-
-    @Test
-    public void addAnswer_withExistingQuestionId() {
-        int answerId = 0;
-        when(questionDaoMem.find(0)).thenReturn(new Question("test", "test", "test", 0, null));
-        Answer expectedAnswer = new Answer("Test", "test", 0, 0);
-        expectedAnswer.setId(answerId);
-
-        answerDaoMem.add(expectedAnswer);
-        assertEquals(expectedAnswer, answerDaoMem.find(answerId));
-    }
+//
+//    @Test
+//    public void addAnswer_withExistingQuestionId() {
+//        int answerId = 0;
+//        when(questionDaoMem.find(0)).thenReturn(new Question("test", "test", "test", 0, null));
+//        Answer expectedAnswer = new Answer("Test", "test", 0, 0);
+//        expectedAnswer.setId(answerId);
+//
+//        answerDaoMem.add(expectedAnswer);
+//        assertEquals(expectedAnswer, answerDaoMem.find(answerId));
+//    }
 
     @Test
     public void addAnswer_withNonExistingQuestionId_throwApiRequestException() {
