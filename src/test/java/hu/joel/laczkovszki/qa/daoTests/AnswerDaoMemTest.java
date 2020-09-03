@@ -34,7 +34,7 @@ public class AnswerDaoMemTest {
     public void addAnswer_withExistingQuestionId() {
         int answerId = 0;
         when(questionDaoMem.find(0)).thenReturn(new Question("test", "test", "test", 0, null));
-        Answer expectedAnswer = new Answer("Test", "test", 0);
+        Answer expectedAnswer = new Answer("Test", "test", 0, 0);
         expectedAnswer.setId(answerId);
 
         answerDaoMem.add(expectedAnswer);
@@ -45,7 +45,7 @@ public class AnswerDaoMemTest {
     public void addAnswer_withNonExistingQuestionId_throwApiRequestException() {
         int questionId = 2;
         when(questionDaoMem.find(questionId)).thenThrow(new ApiRequestException("Question id not found (2)"));
-        Answer answer = new Answer("test", "test", questionId);
+        Answer answer = new Answer("test", "test", questionId, 1);
 
         Exception exception = assertThrows(ApiRequestException.class, () -> answerDaoMem.add(answer));
         assertEquals("Question id not found (2)", exception.getMessage());
@@ -54,7 +54,7 @@ public class AnswerDaoMemTest {
     @Test
     public void findAnswer_withExistingId_returnAnswer() {
         int answerId = 2;
-        Answer answer = new Answer("test", "test", 0);
+        Answer answer = new Answer("test", "test", 0, 2);
         answer.setId(answerId);
 
         answerDaoMem.add(answer);
@@ -74,7 +74,7 @@ public class AnswerDaoMemTest {
     public void removeAnswer_withExistingId() {
         int answerId = 0;
         for (int i = 0; i <= 3; i++) {
-            Answer answer = new Answer("test", "test", 0);
+            Answer answer = new Answer("test", "test", 0, 0);
             answer.setId(i);
             answerDaoMem.add(answer);
         }
@@ -94,10 +94,10 @@ public class AnswerDaoMemTest {
     @Test
     public void updateAnswer_withExistingId() {
         int answerId = 0;
-        Answer answer = new Answer("test", "test", 0);
+        Answer answer = new Answer("test", "test", 0, 0);
         answer.setId(0);
         answerDaoMem.add(answer);
-        Answer updatedAnswer = new Answer("updated", "updated", 0);
+        Answer updatedAnswer = new Answer("updated", "updated", 0, 0);
         answerDaoMem.update(answerId, updatedAnswer);
 
         assertEquals(updatedAnswer, answerDaoMem.find(answerId));
@@ -106,7 +106,7 @@ public class AnswerDaoMemTest {
     @Test
     public void updateAnswer_withNonExistingId_throwApiRequestException() {
         int noeExistingId = 3000;
-        Answer updatedAnswer = new Answer("updated", "updated", 0);
+        Answer updatedAnswer = new Answer("updated", "updated", 0, 0);
         Exception exception = assertThrows(ApiRequestException.class, () -> answerDaoMem.update(noeExistingId, updatedAnswer));
         assertEquals("Answer id not found(3000)", exception.getMessage());
     }
@@ -115,7 +115,7 @@ public class AnswerDaoMemTest {
     public void getAnswerByQuestionId_withExistingQuestionId() {
         int questionId = 0;
         for (int i = 0; i <= 3; i++) {
-            Answer answer = new Answer("test", "test", questionId);
+            Answer answer = new Answer("test", "test", questionId, 0);
             answer.setId(i);
             answerDaoMem.add(answer);
         }
@@ -135,7 +135,7 @@ public class AnswerDaoMemTest {
     public void removeAnswersByQuestionId_withExistingQuestionId() {
         int questionId = 0;
         for (int i = 0; i <= 3; i++) {
-            Answer answer = new Answer("test", "test", questionId);
+            Answer answer = new Answer("test", "test", questionId, 0);
             answer.setId(i);
             answerDaoMem.add(answer);
         }

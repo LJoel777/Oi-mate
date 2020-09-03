@@ -16,6 +16,7 @@ public class UserDaoMem implements CRUDInterface<User> , UserDao {
 
     @Autowired
     public static void setUsers(List<User> users) {
+        System.out.println("Most");
         UserDaoMem.users = users;
     }
 

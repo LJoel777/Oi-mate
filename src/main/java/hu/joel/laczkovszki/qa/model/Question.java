@@ -14,6 +14,10 @@ public class Question {
     private int userId;
     private List<String> categories;
 
+    public List<String> getCategories() {
+        return categories;
+    }
+
     public int getUserId() {
         return userId;
     }

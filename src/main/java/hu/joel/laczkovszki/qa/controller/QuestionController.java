@@ -50,9 +50,8 @@ public class QuestionController {
     }
 
     @GetMapping("question/{id}/remove")
-    public String removeQuestion(@PathVariable("id") int id) {
+    public void removeQuestion(@PathVariable("id") int id) {
         questionService.removeQuestionById(id);
-        return "/answersByQuestionId/{questionId}/remove";
     }
 
     @GetMapping("questions-by-user-id/{userId}")

@@ -24,7 +24,7 @@ public class User {
         this.lastName = lastName;
         if (!profilePicture.equals(""))
             this.profilePicture = profilePicture;
-        this.fieldsOfInterest = fieldsOfInterest;
+        this.fieldsOfInterest = fieldsOfInterest != null ? fieldsOfInterest : new ArrayList<>();
         this.friends = friends != null ? friends : new ArrayList<>();
         this.id = idCounter++;
     }

@@ -41,11 +41,13 @@ public class AnswerController {
 
     @GetMapping("/answer/{id}/remove")
     public void removeAnswer(@PathVariable("id") int id) {
+        System.out.println(id);
         answerService.removeAnswerById(id);
     }
 
     @GetMapping("/answersByQuestionId/{questionId}/remove")
-    public void removeAnswersByQuestionId(@PathVariable("questionId") int questionId) {
-        answerService.removeAnswersByQuestionId(questionId);
+    public void removeAnswersByQuestionId(@PathVariable("questionId") String questionId) {
+        System.out.println(questionId);
+//        answerService.removeAnswersByQuestionId(questionId);
     }
 }

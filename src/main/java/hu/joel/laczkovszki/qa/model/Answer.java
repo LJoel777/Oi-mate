@@ -6,11 +6,17 @@ public class Answer {
     private String description;
     private String imagePath;
     private final int questionId;
+    private final int userId;
 
-    public Answer(String description, String imagePath, int questionId) {
+    public int getUserId() {
+        return userId;
+    }
+
+    public Answer(String description, String imagePath, int questionId, int userId) {
         this.description = description;
         this.imagePath = imagePath;
         this.questionId = questionId;
+        this.userId = userId;
         id = idCounter++;
     }
 
