@@ -2,6 +2,7 @@ package hu.joel.laczkovszki.qa.service;
 
 import hu.joel.laczkovszki.qa.dao.UserDao;
 import hu.joel.laczkovszki.qa.dao.implementation.UserDaoMem;
+import hu.joel.laczkovszki.qa.model.Hobby;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.testData.TestUserData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class UserService {
     public User getUser(int id) {
         return userDao.find(id);
     }
+
     public User findByEmail(String email){
         try {
 
@@ -38,5 +40,13 @@ public class UserService {
 
     public void addUser(User user) {
         userDao.add(user);
+    }
+
+    public void addFriendToUser (int userId, Integer friendId) {
+        getUser(userId).addFriend(friendId);
+    }
+
+    public void updateHobbies (Hobby hobby) {
+        getUser(hobby.getId()).setFieldsOfInterest(hobby.getFieldsOfInterest());
     }
 }

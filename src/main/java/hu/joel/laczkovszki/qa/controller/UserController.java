@@ -1,6 +1,7 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
+import hu.joel.laczkovszki.qa.model.Hobby;
 import hu.joel.laczkovszki.qa.model.Session;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.service.UserService;
@@ -51,5 +52,15 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User getUser (@PathVariable("id") int id) {
         return userService.getUser(id);
+    }
+
+    @GetMapping("/user/{friendId}/add-friend/{userId}")
+    public void addFriendToUser (@PathVariable("friendId") Integer friendId, @PathVariable("userId") Integer userId) {
+        userService.addFriendToUser(userId, friendId);
+    }
+
+    @PostMapping("/update-hobbies")
+    public void updateHobbies (@RequestBody Hobby hobby) {
+        userService.updateHobbies(hobby);
     }
 }

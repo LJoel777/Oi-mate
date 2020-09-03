@@ -102,6 +102,8 @@ public class User {
     }
 
     public void addFriend(Integer id) {
-        this.friends.add(id);
+        if (id != this.id && !friends.contains(id)) {
+            this.friends.add(id);
+        }
     }
 }
