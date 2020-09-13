@@ -31,12 +31,18 @@ public class UserDaoMem implements CRUDInterface<User> , UserDao {
 
     @Override
     public void remove(int id) {
-        users = users.stream().filter(user -> user.getId() != id).collect(Collectors.toList());
+        users.remove(users.stream()
+                .filter((user -> user.getId() == id))
+                .findFirst()
+                .orElseThrow(() -> new ApiRequestException("User id not found" + "(" + id + ")")));
     }
 
     @Override
     public void update(int id, User user) {
-        users = users.stream().map(user1 -> user1.getId()==id ? user1=user : user1).collect(Collectors.toList());
+        remove(id);
+        user.setId(id);
+        users.add(user);
+        User user1 = find(id);
     }
 
     @Override

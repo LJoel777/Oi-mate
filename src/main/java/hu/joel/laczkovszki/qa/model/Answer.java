@@ -1,7 +1,25 @@
 package hu.joel.laczkovszki.qa.model;
 
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+@Entity
+@NoArgsConstructor
 public class Answer {
     private static int idCounter;
+    @Id
+    @GeneratedValue
+    private Long id1;
+
+    public Long getId1() {
+        return id1;
+    }
+
+    @Transient
     private int id;
     private String description;
     private String imagePath;
@@ -25,7 +43,7 @@ public class Answer {
         this.imagePath = imagePath;
         this.questionId = questionId;
         this.userId = userId;
-        id = idCounter++;
+//        id = idCounter++;
     }
 
     public int getQuestionId() {

@@ -19,7 +19,6 @@ public class RegisterController {
 
     @PostMapping("/registration")
     public void registration(@RequestBody User user){
-        System.out.println(user.getFieldsOfInterest());
         user.setPsw(BCrypt.hashpw(user.getPsw(),BCrypt.gensalt(10)));
         userService.addUser(user);
     }
