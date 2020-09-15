@@ -26,34 +26,34 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> showAllUsers() {
-        return userService.getAllUsers();
+        return userService.getAllUser();
     }
 
     @PostMapping("/login")
     public Session loginVerification(@RequestBody Map<String, String> login) {
         String email = login.get("email");
         String psw = login.get("password");
-        return loginValidater(email, psw);
+        return loginValidator(email, psw);
     }
 
-    private Session loginValidater(String email, String psw) {
+    private Session loginValidator(String email, String psw) {
         User user = userService.findByEmail(email);
-        int userID = user.getId();
+        Long userID = user.getId();
         try {
             String originalPsw = user.getPsw();
             return new Session(BCrypt.checkpw(psw, originalPsw), userID);
         } catch (NullPointerException e) {
-            return new Session(false, 0);
+            return new Session(false, 0L);
         }
     }
 
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable("id") int id) {
+    public User getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
     @GetMapping("/user/{friendId}/add-friend/{userId}")
-    public void addFriendToUser(@PathVariable("friendId") Integer friendId, @PathVariable("userId") Integer userId) {
+    public void addFriendToUser(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
         userService.addFriendToUser(userId, friendId);
     }
 

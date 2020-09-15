@@ -2,13 +2,13 @@ package hu.joel.laczkovszki.qa.model;
 
 public class Session {
     private boolean isValid;
-    private int id;
+    private Long id;
 
     public boolean isValid() {
         return isValid;
     }
 
-    public Session(boolean isValid, int id) {
+    public Session(boolean isValid, Long id) {
         this.isValid = isValid;
         this.id = id;
     }
@@ -17,11 +17,11 @@ public class Session {
         isValid = valid;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
