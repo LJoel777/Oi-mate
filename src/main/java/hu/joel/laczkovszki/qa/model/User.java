@@ -1,109 +1,54 @@
 package hu.joel.laczkovszki.qa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity(name = "Costumer")
 public class User {
-    private int id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String userName;
     private String psw;
     private String emailAddress;
     private String firstName;
     private String lastName;
-    private String profilePicture = "https://www.bluedivineevents.com/wp-content/uploads/2018/07/profile.png";
-    private List<String> fieldsOfInterest;
-    private List<Integer> friends;
-    private static int idCounter = 0;
+    @Column(columnDefinition = "TEXT")
+    private String profilePicture = "https://lh3.googleusercontent.com/proxy/niIZHY2kuO9P5JoBNhtR4Z5861ZIRKhGdvUj3wcRSaC4JzpNqctYJ_wgV0gaoUMJFUOPlLA4knXf40CJrH-bbCgO3hu8ApxILofKgT3kfOdXsdSOJk6wqGk";
+    @ElementCollection
+    @Singular
+    private List<String> fieldsOfInterests;
+    @JsonBackReference(value = "friends")
+    @ManyToMany
+    @Singular
+    private List<User> friends = new ArrayList<>();
+    @JsonBackReference(value = "comments")
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Comment> comments = new ArrayList<>();
+    @JsonBackReference(value = "posts")
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Post> posts = new ArrayList<>();
 
-    public User(String userName, String psw, String emailAddress, String firstName, String lastName, String profilePicture, List<String> fieldsOfInterest, List<Integer> friends) {
-        this.userName = userName;
-        this.psw = psw;
-        this.emailAddress = emailAddress;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        if (!profilePicture.equals(""))
-            this.profilePicture = profilePicture;
-        this.fieldsOfInterest = fieldsOfInterest != null ? fieldsOfInterest : new ArrayList<>();
-        this.friends = friends != null ? friends : new ArrayList<>();
-        this.id = idCounter++;
+    public void addPost(Post post) {
+        posts.add(post);
     }
 
-    public List<String> getFieldsOfInterest() {
-        return fieldsOfInterest;
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
-    public void setFieldsOfInterest(List<String> fieldsOfInterest) {
-        this.fieldsOfInterest = fieldsOfInterest;
+    public void addFriend(User user) {
+        if (user != this && !friends.contains(user))
+            this.friends.add(user);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPsw() {
-        return psw;
-    }
-
-    public void setPsw(String psw) {
-        this.psw = psw;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
-    public List<Integer> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(List<Integer> friends) {
-        this.friends = friends;
-    }
-
-    public void addFriend(Integer id) {
-        if (id != this.id && !friends.contains(id)) {
-            this.friends.add(id);
-        }
-    }
 }
