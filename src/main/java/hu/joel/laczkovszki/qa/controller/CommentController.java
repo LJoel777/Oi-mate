@@ -44,4 +44,17 @@ public class CommentController {
     public void removeAnswer(@PathVariable("id") Long id) {
         commentService.removeCommentById(id);
     }
+
+    @GetMapping("/answer/{id}/vote/{userId}/{vote}")
+    public void addVote (@PathVariable("id") Long commentId,
+                         @PathVariable("userId") Long userId,
+                         @PathVariable("vote") Integer vote){
+        commentService.addVote(commentId, userId, vote);
+    }
+
+    @GetMapping("answer/{id}/get-vote/{userId}")
+    public Integer getVote(@PathVariable("id") Long commentID, @PathVariable("userId") Long userId) {
+        Integer vote = commentService.getVote(commentID, userId);
+        return vote != null ? vote : 0;
+    }
 }
