@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +30,18 @@ public class Comment {
     private Post post;
     @ManyToOne
     private User user;
+    @ElementCollection
+    private Map<User, Integer> votes = new HashMap<>();
+
+    public void addVote(User user, Integer vote){
+        if (!votes.containsKey(user)) {
+            votes.put(user, vote);
+        }
+    }
+
+    public Integer didUserVoted(User user) {
+        return votes.getOrDefault(user, null);
+    }
 }
 
 

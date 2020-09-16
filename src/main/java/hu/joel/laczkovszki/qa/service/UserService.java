@@ -1,11 +1,13 @@
 package hu.joel.laczkovszki.qa.service;
 
 import hu.joel.laczkovszki.qa.model.User;
+import hu.joel.laczkovszki.qa.model.UserInfoView;
 import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -20,8 +22,21 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserInfoView getUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user  != null) {
+            return UserInfoView.builder()
+                    .id(id)
+                    .userName(user.getUserName())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .emailAddress(user.getEmailAddress())
+                    .fieldsOfInterests(user.getFieldsOfInterests())
+                    .profilePicture(user.getProfilePicture())
+                    .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
+                    .build();
+        }
+        return null;
     }
 
     public User findByEmail(String email){

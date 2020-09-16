@@ -7,15 +7,14 @@ import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 
 @Service
 public class PostService {
-    private PostRepository postRepository;
-    private UserRepository userRepository;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public PostService(PostRepository postRepository, UserRepository userRepository) {
@@ -64,13 +63,27 @@ public class PostService {
         return new ArrayList<>();
     }
 
-//    public List<Post> getPostsByFriends(Long id) {
-//        User user = userRepository.findById(id).orElse(null);
-//        if (user != null) {
-//            Set<Friend> friends = user.getFriends();
-//            return postRepository.findAllByUserIsIn(friends);
-//        }
-//        return new ArrayList<>();
-//    }
+    public Set<Post> getPostsByFriends(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            Set<User> friends = user.getFriends();
+            return postRepository.findAllByUserIsIn(friends);
+        }
+        return new HashSet<>();
+    }
 
+    public void addVote(Long postId, Long userId, Integer vote) {
+        Post post = postRepository.findById(postId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        if (post != null && user != null && (vote == 1 || vote == -1)) {
+            post.addVote(user, vote);
+            postRepository.save(post);
+        }
+    }
+
+    public Integer getVote(Long postID, Long userId) {
+        Post post = postRepository.findById(postID).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        return (post != null && user != null) ? post.didUserVoted(user) : null;
+    }
 }

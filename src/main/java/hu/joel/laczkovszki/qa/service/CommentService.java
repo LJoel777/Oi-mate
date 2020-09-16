@@ -54,4 +54,19 @@ public class CommentService {
     public List<Comment> getCommentsMyPostId(Long questionId) {
         return commentRepository.getAllByPostId(questionId);
     }
+
+    public void addVote(Long commentId, Long userId, Integer vote) {
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        if (comment != null && user != null && (vote == 1 || vote == -1)) {
+            comment.addVote(user, vote);
+            commentRepository.save(comment);
+        }
+    }
+
+    public Integer getVote(Long commentId, Long userId) {
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        return (comment != null && user != null) ? comment.didUserVoted(user) : null;
+    }
 }

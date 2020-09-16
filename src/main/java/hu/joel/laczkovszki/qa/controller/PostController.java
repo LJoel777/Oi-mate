@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -22,11 +23,11 @@ public class PostController {
     public List<Post> getQuestionByHobby (@PathVariable("id") Long id) {
         return postService.getPostsByUserHobby(id);
     }
-//
-//    @GetMapping("/friend-news/{id}")
-//    public List<Post> getQuestionsByFriend (@PathVariable("id") Long id) {
-//        return postService.getPostsByFriends(id);
-//    }
+
+    @GetMapping("/friend-news/{id}")
+    public Set<Post> getQuestionsByFriend (@PathVariable("id") Long id) {
+        return postService.getPostsByFriends(id);
+    }
 
     @GetMapping("/posts")
     public List<Post> getPosts() {
@@ -57,5 +58,18 @@ public class PostController {
     @GetMapping("posts-by-user-id/{userId}")
     public List<Post> getQuestions_byUserId(@PathVariable("userId") Long userId) {
         return postService.getAllPost_byUserId(userId);
+    }
+
+    @GetMapping("post/{postId}/vote/{userId}/{vote}")
+    public void voteOnPost(@PathVariable("postId") Long postId,
+                           @PathVariable("userId") Long userId,
+                           @PathVariable("vote") Integer vote) {
+        postService.addVote(postId, userId, vote);
+    }
+
+    @GetMapping("post/{postId}/get-vote/{userId}")
+    public Integer getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
+        Integer vote = postService.getVote(postID, userId);
+        return vote != null ? vote : 0;
     }
 }

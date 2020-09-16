@@ -32,8 +32,10 @@ public class User {
     @ElementCollection
     @Singular
     private List<String> fieldsOfInterests;
-    @ElementCollection
-    private List<Long> friendsId;
+    @EqualsAndHashCode.Exclude
+    @ManyToMany
+    @Singular
+    private Set<User> friends = new HashSet<>();
     @JsonBackReference(value = "comments")
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @Builder.Default

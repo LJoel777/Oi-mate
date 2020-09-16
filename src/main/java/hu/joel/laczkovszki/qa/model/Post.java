@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -31,6 +32,8 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
     @ManyToOne
     private User user;
+    @ElementCollection
+    private Map<User, Integer> votes = new HashMap<>();
 
     public void addComment(Comment comment) {
         comments.add(comment);
@@ -38,5 +41,15 @@ public class Post {
 
     public boolean checkCategory(String hobby) {
         return categories.contains(hobby);
+    }
+
+    public void addVote(User user, Integer vote){
+        if (!votes.containsKey(user)) {
+            votes.put(user, vote);
+        }
+    }
+
+    public Integer didUserVoted(User user) {
+        return votes.getOrDefault(user, null);
     }
 }
