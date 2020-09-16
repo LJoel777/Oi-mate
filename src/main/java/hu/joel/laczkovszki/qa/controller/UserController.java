@@ -4,6 +4,7 @@ package hu.joel.laczkovszki.qa.controller;
 import hu.joel.laczkovszki.qa.model.Hobby;
 import hu.joel.laczkovszki.qa.model.Session;
 import hu.joel.laczkovszki.qa.model.User;
+import hu.joel.laczkovszki.qa.model.UserInfoView;
 import hu.joel.laczkovszki.qa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,6 @@ public class UserController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/users")
-    public List<User> showAllUsers() {
-        return userService.getAllUser();
     }
 
     @PostMapping("/login")
@@ -48,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable("id") Long id) {
+    public UserInfoView getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
