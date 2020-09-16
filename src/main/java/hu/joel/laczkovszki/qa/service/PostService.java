@@ -1,6 +1,5 @@
 package hu.joel.laczkovszki.qa.service;
 
-import hu.joel.laczkovszki.qa.model.Hobby;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.repository.PostRepository;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -27,6 +27,7 @@ public class PostService {
         User user = userRepository.findById(post.getUserId()).orElse(null);
         if (user != null) {
             post.setUser(user);
+            user.addPost(post);
             postRepository.save(post);
         }
     }
@@ -63,13 +64,13 @@ public class PostService {
         return new ArrayList<>();
     }
 
-    public List<Post> getPostsByFriends(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            List<User> friends = user.getFriends();
-            return postRepository.findAllByUserIsIn(friends);
-        }
-        return new ArrayList<>();
-    }
+//    public List<Post> getPostsByFriends(Long id) {
+//        User user = userRepository.findById(id).orElse(null);
+//        if (user != null) {
+//            Set<Friend> friends = user.getFriends();
+//            return postRepository.findAllByUserIsIn(friends);
+//        }
+//        return new ArrayList<>();
+//    }
 
 }

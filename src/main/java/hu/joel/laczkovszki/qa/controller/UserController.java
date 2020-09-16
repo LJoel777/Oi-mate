@@ -1,17 +1,14 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
-import hu.joel.laczkovszki.qa.model.Hobby;
 import hu.joel.laczkovszki.qa.model.Session;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import org.mindrot.jbcrypt.BCrypt;
-
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -57,8 +54,8 @@ public class UserController {
         userService.addFriendToUser(userId, friendId);
     }
 
-    @PostMapping("/update-hobbies")
-    public void updateHobbies(@RequestBody Hobby hobby) {
-        userService.updateHobbies(hobby);
+    @PostMapping("/update-user/{id}")
+    public void updateHobbies(@PathVariable("id") Long id, @RequestBody User user) {
+        userService.updateUser(user, id);
     }
 }

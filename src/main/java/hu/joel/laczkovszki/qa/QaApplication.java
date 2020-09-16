@@ -1,13 +1,11 @@
 package hu.joel.laczkovszki.qa;
 
-import com.fasterxml.jackson.databind.node.POJONode;
 import hu.joel.laczkovszki.qa.model.Comment;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.repository.CommentRepository;
 import hu.joel.laczkovszki.qa.repository.PostRepository;
 import hu.joel.laczkovszki.qa.repository.UserRepository;
-import javafx.geometry.Pos;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +13,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class QaApplication {
@@ -40,41 +34,33 @@ public class QaApplication {
         return args -> {
             String psw = BCrypt.hashpw("almafa",BCrypt.gensalt(10));
             User werneerm = User.builder()
-                    .userName("werneerm")
+                    .username("werneerm")
                     .psw(psw)
                     .firstName("Mark")
                     .lastName("Werner")
                     .emailAddress("werneem@mark.com")
                     .fieldsOfInterest("stream")
                     .fieldsOfInterest("gaming")
-                    .posts(new ArrayList<>())
-                    .comments(new ArrayList<>())
+//                    .friends(new ArrayList<>())
                     .build();
             User joel = User.builder()
-                    .userName("Szaknoel10")
-                    .friend(werneerm)
+                    .username("Szaknoel10")
                     .psw(psw)
                     .emailAddress("joel.laczkovszki@gmail.com")
                     .firstName("Joel")
                     .lastName("Laczkovszki")
                     .fieldsOfInterest("gaming")
                     .fieldsOfInterest("programing")
-                    .posts(new ArrayList<>())
-                    .comments(new ArrayList<>())
                     .profilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0IriKi0lR75APTU8DeqQqHgUG2wkGTJrO1g&usqp=CAU")
                     .build();
             User gergo = User.builder()
-                    .userName("Coryon Kane")
+                    .username("Coryon Kane")
                     .psw(psw)
-                    .friend(joel)
-                    .friend(werneerm)
                     .fieldsOfInterest("gaming")
                     .fieldsOfInterest("stream")
                     .fieldsOfInterest("programing")
                     .lastName("Illyes")
-                    .firstName("Gergo")
-                    .posts(new ArrayList<>())
-                    .comments(new ArrayList<>())
+                    .lastName("Gergo")
                     .emailAddress("gergo@gergo.com")
                     .profilePicture("https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/72793449_2576453445767045_7918286579754336256_n.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_ohc=7ze_ahWdAv0AX8yW9uZ&_nc_ht=scontent-vie1-1.xx&oh=4a243f16e56a977ecc3f2deb95037112&oe=5F7597D8")
                     .build();
@@ -83,13 +69,11 @@ public class QaApplication {
                     .description("Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial!")
                     .category("programing")
                     .user(joel)
-                    .comments(new ArrayList<>())
                     .build();
             Post post2 = Post.builder()
                     .description("They are waiting to kill you...")
                     .imagePath("https://preview.redd.it/8lb7q231wxk51.jpg?width=640&crop=smart&auto=webp&s=bd8ec36e7fc38db4f2271b92a9f7a21724b58a89")
                     .category("programing")
-                    .comments(new ArrayList<>())
                     .user(gergo)
                     .build();
             Post post3 = Post.builder()
@@ -97,34 +81,29 @@ public class QaApplication {
                     .imagePath("https://preview.redd.it/vl4cykj0hyk51.png?width=640&crop=smart&auto=webp&s=00b6e473dd89913120d7d8ef688efb853f1ec528")
                     .category("programing")
                     .user(joel)
-                    .comments(new ArrayList<>())
                     .build();
             Post post4 = Post.builder()
                     .description("Guilty")
                     .imagePath("https://preview.redd.it/o9bfkmrgzyk51.jpg?width=640&crop=smart&auto=webp&s=53569fbaeea6c43c9d429d7cfe1149d6df90c79e")
                     .category("programing")
                     .user(werneerm)
-                    .comments(new ArrayList<>())
                     .build();
             Post post5 = Post.builder()
                     .description("Back in the day when five fps didn’t even matter")
                     .category("gaming")
                     .imagePath("https://preview.redd.it/zgjklki3dyk51.jpg?width=640&crop=smart&auto=webp&s=140ff481bf7cd844543b7282b6b3a258553734dc")
                     .user(gergo)
-                    .comments(new ArrayList<>())
                     .build();
             Post post6 = Post.builder()
                     .description("RTX mode on")
                     .imagePath("https://i.redd.it/1c6ocbnp0yk51.jpg")
                     .category("gaming")
                     .user(werneerm)
-                    .comments(new ArrayList<>())
                     .build();
             Post post7 = Post.builder()
                     .description("Halo infinite giveaway")
                     .imagePath("https://i.redd.it/taziir6viyk51.jpg")
                     .category("stream")
-                    .comments(new ArrayList<>())
                     .user(joel)
                     .build();
 
@@ -171,10 +150,11 @@ public class QaApplication {
                     .post(post6)
                     .user(gergo)
                     .build();
-
             userRepository.save(werneerm);
             userRepository.save(joel);
             userRepository.save(gergo);
+
+
             postRepository.save(post1);
             postRepository.save(post2);
             postRepository.save(post3);

@@ -22,11 +22,11 @@ public class PostController {
     public List<Post> getQuestionByHobby (@PathVariable("id") Long id) {
         return postService.getPostsByUserHobby(id);
     }
-
-    @GetMapping("/friend-news/{id}")
-    public List<Post> getQuestionsByFriend (@PathVariable("id") Long id) {
-        return postService.getPostsByFriends(id);
-    }
+//
+//    @GetMapping("/friend-news/{id}")
+//    public List<Post> getQuestionsByFriend (@PathVariable("id") Long id) {
+//        return postService.getPostsByFriends(id);
+//    }
 
     @GetMapping("/posts")
     public List<Post> getPosts() {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,13 +20,15 @@ public class Post {
     @Transient
     private Long userId;
     private String description;
-    private String imagePath;
+    @Builder.Default
+    private String imagePath = "";
     @ElementCollection
     @Singular
-    private List<String> categories;
+    private List<String> categories = new ArrayList<>();
     @JsonBackReference(value = "comments")
     @OneToMany(mappedBy = "post",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Comment> comments;
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
     @ManyToOne
     private User user;
 
