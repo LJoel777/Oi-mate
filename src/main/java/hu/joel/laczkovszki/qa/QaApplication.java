@@ -1,13 +1,11 @@
 package hu.joel.laczkovszki.qa;
 
-import com.fasterxml.jackson.databind.node.POJONode;
 import hu.joel.laczkovszki.qa.model.Comment;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.repository.CommentRepository;
 import hu.joel.laczkovszki.qa.repository.PostRepository;
 import hu.joel.laczkovszki.qa.repository.UserRepository;
-import javafx.geometry.Pos;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class QaApplication {

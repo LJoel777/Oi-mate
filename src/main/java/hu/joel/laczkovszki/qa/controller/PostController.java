@@ -58,4 +58,17 @@ public class PostController {
     public List<Post> getQuestions_byUserId(@PathVariable("userId") Long userId) {
         return postService.getAllPost_byUserId(userId);
     }
+
+    @GetMapping("post/{postId}/vote/{userId}/{vote}")
+    public void voteOnPost(@PathVariable("postId") Long postId,
+                           @PathVariable("userId") Long userId,
+                           @PathVariable("vote") Integer vote) {
+        postService.addVote(postId, userId, vote);
+    }
+
+    @GetMapping("post/{postId}/get-vote/{userId}")
+    public Integer getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
+        Integer vote = postService.getVote(postID, userId);
+        return vote != null ? vote : 0;
+    }
 }
