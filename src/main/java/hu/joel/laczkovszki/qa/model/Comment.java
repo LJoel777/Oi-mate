@@ -20,7 +20,8 @@ public class Comment {
     private Long id;
     private String description;
     @Column(columnDefinition = "TEXT")
-    private String imagePath;
+    @Builder.Default
+    private String imagePath = "";
     @Transient
     private Long postId;
     @Transient

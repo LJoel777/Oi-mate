@@ -1,12 +1,12 @@
 package hu.joel.laczkovszki.qa.service;
 
-import hu.joel.laczkovszki.qa.model.Hobby;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.repository.PostRepository;
 import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.*;
 
@@ -26,6 +26,7 @@ public class PostService {
         User user = userRepository.findById(post.getUserId()).orElse(null);
         if (user != null) {
             post.setUser(user);
+            user.addPost(post);
             postRepository.save(post);
         }
     }
