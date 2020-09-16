@@ -5,7 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -27,10 +29,11 @@ public class User {
     @ElementCollection
     @Singular
     private List<String> fieldsOfInterests;
-    @JsonBackReference(value = "friends")
+//    @JsonBackReference(value = "friends")
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @Singular
-    private List<User> friends = new ArrayList<>();
+    private Set<User> friends = new HashSet<>();
     @JsonBackReference(value = "comments")
     @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Comment> comments = new ArrayList<>();

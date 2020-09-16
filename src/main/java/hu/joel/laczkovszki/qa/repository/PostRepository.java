@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT p FROM Post p WHERE p.user.id = :id")
@@ -14,5 +15,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByCategoriesIn(List<String> categories);
 
-    List<Post> findAllByUserIsIn(List<User> users);
+    Set<Post> findAllByUserIsIn(Set<User> users);
 }

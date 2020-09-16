@@ -8,9 +8,7 @@ import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -64,13 +62,13 @@ public class PostService {
         return new ArrayList<>();
     }
 
-    public List<Post> getPostsByFriends(Long id) {
+    public Set<Post> getPostsByFriends(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            List<User> friends = user.getFriends();
+            Set<User> friends = user.getFriends();
             return postRepository.findAllByUserIsIn(friends);
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 
     public void addVote(Long postId, Long userId, Integer vote) {
