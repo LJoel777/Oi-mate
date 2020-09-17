@@ -14,7 +14,7 @@ import java.util.Set;
 @Builder
 public class UserInfoView {
     private Long id;
-    private String userName;
+    private String username;
     private String emailAddress;
     private String firstName;
     private String lastName;

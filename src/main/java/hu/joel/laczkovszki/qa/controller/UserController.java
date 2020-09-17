@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -46,12 +47,21 @@ public class UserController {
     }
 
     @GetMapping("/user/{friendId}/add-friend/{userId}")
-    public void addFriendToUser(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
+    public Set<Long> addFriendToUser(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
         userService.addFriendToUser(userId, friendId);
+        return userService.getUser(friendId).getFriends();
     }
 
+    @GetMapping("/user/{friendId}/remove-friend/{userId}")
+    public Set<Long> removeFriend(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
+        userService.removeFriend(userId, friendId);
+        return userService.getUser(friendId).getFriends();
+    }
+
+
     @PostMapping("/update-user/{id}")
-    public void updateHobbies(@PathVariable("id") Long id, @RequestBody User user) {
+    public UserInfoView updateHobbies(@PathVariable("id") Long id, @RequestBody UserInfoView user) {
         userService.updateUser(user, id);
+        return userService.getUser(id);
     }
 }

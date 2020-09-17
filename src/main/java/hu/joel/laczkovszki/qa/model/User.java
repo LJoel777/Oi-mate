@@ -20,7 +20,7 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    //    @Column(name = "username", nullable = false, unique = true)
     private String username;
     private String psw;
     private String emailAddress;
@@ -32,6 +32,7 @@ public class User {
     @ElementCollection
     @Singular
     private List<String> fieldsOfInterests;
+    @JsonBackReference(value = "friends")
     @EqualsAndHashCode.Exclude
     @ManyToMany
     @Singular
@@ -54,8 +55,14 @@ public class User {
     }
 
     public void addFriend(User user) {
-        friendsId.add(user.getId());
+        if (user != this && !friends.contains(user))
+            this.friends.add(user);
     }
+
+    public void removeFriend(User user) {
+        this.friends.remove(user);
+    }
+
 
 }
 

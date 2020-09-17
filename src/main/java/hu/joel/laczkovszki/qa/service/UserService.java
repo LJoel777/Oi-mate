@@ -27,7 +27,7 @@ public class UserService {
         if (user  != null) {
             return UserInfoView.builder()
                     .id(id)
-                    .userName(user.getUserName())
+                    .username(user.getUsername())
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .emailAddress(user.getEmailAddress())
@@ -56,13 +56,22 @@ public class UserService {
     public void addFriendToUser(Long userId, Long friendId) {
         User friend = userRepository.getOne(friendId);
         User user = userRepository.getOne(userId);
-//        friend.addFriend(user);
-//        user.addFriend(friend);
+        friend.addFriend(user);
+        user.addFriend(friend);
         userRepository.save(user);
         userRepository.save(friend);
     }
 
-    public void updateUser(User user, Long id) {
+    public void removeFriend(Long userId, Long friendId) {
+        User friend = userRepository.getOne(friendId);
+        User user = userRepository.getOne(userId);
+        friend.removeFriend(user);
+        user.removeFriend(friend);
+        userRepository.save(friend);
+        userRepository.save(user);
+    }
+
+    public void updateUser(UserInfoView user, Long id) {
         User updatedUser = userRepository.getOne(id);
         updatedUser.setFieldsOfInterests(user.getFieldsOfInterests());
         updatedUser.setEmailAddress(user.getEmailAddress());
