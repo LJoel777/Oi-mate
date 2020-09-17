@@ -35,9 +35,9 @@ public class UserController {
         Long userID = user.getId();
         try {
             String originalPsw = user.getPsw();
-            return new Session(BCrypt.checkpw(psw, originalPsw), userID);
+            return new Session(user.getUsername(), BCrypt.checkpw(psw, originalPsw), userID, user.getFieldsOfInterests());
         } catch (NullPointerException e) {
-            return new Session(false, 0L);
+            return new Session("", false, 0L, null);
         }
     }
 

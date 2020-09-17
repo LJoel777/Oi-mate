@@ -6,7 +6,6 @@ import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,8 +17,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    public User getNormalUser(Long id) {
+        return userRepository.getOne(id);
     }
 
     public UserInfoView getUser(Long id) {
