@@ -11,6 +11,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("post/")
 public class PostController {
     private PostService postService;
 
@@ -19,38 +20,39 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/hobby-news/{id}")
+    @GetMapping("hobby-news/{id}")
     public List<Post> getQuestionByHobby(@PathVariable("id") Long id) {
+        System.out.println("na");
         return postService.getPostsByUserHobby(id);
     }
 
-    @GetMapping("/friend-news/{id}")
+    @GetMapping("friend-news/{id}")
     public Set<Post> getQuestionsByFriend(@PathVariable("id") Long id) {
         return postService.getPostsByFriends(id);
     }
 
-    @GetMapping("/posts")
+    @GetMapping("posts")
     public List<Post> getPosts() {
         return postService.getAllPost();
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("{id}")
     public Post getPost(@PathVariable("id") Long id) {
         return postService.getPostById(id);
     }
 
-    @PostMapping("/post/add")
+    @PostMapping("add")
     public Long addQuestion(@RequestBody Post post) {
         postService.addPost(post);
         return post.getId();
     }
 
-    @PostMapping("/post/{id}/update")
+    @PostMapping("{id}/update")
     public void updateQuestion(@PathVariable("id") Long id, @RequestBody Post post) {
         postService.updatePostById(id, post);
     }
 
-    @GetMapping("post/{id}/remove")
+    @GetMapping("{id}/remove")
     public void removeQuestion(@PathVariable("id") Long id) {
         postService.removePostById(id);
     }
@@ -60,14 +62,14 @@ public class PostController {
         return postService.getAllPost_byUserId(userId);
     }
 
-    @GetMapping("post/{postId}/vote/{userId}/{vote}")
+    @GetMapping("{postId}/vote/{userId}/{vote}")
     public void voteOnPost(@PathVariable("postId") Long postId,
                            @PathVariable("userId") Long userId,
                            @PathVariable("vote") Integer vote) {
         postService.addVote(postId, userId, vote);
     }
 
-    @GetMapping("post/{postId}/get-vote/{userId}")
+    @GetMapping("{postId}/get-vote/{userId}")
     public Integer getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
         Integer vote = postService.getVote(postID, userId);
         return vote != null ? vote : 0;

@@ -10,6 +10,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("message/")
 public class MessageController {
     private MessageService messageService;
 
@@ -18,12 +19,12 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @PostMapping("/send-message")
+    @PostMapping("send-message")
     public void addMessage(@RequestBody Message message) {
         messageService.addMessage(message);
     }
 
-    @GetMapping("/get-messages/{topic}")
+    @GetMapping("get-messages/{topic}")
     public Set<MessageView> getMessagesByTopic(@PathVariable("topic") String topic) {
         return messageService.getMessagesByTopic(topic);
     }
