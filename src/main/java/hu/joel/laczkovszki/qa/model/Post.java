@@ -2,6 +2,7 @@ package hu.joel.laczkovszki.qa.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,22 +34,24 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
     @ManyToOne
     private User user;
-    @ElementCollection
+    @ManyToMany
     @JsonIgnore
     @CollectionTable(name = "votes")
-    private Map<User, Integer> votes = new HashMap<>();
+    private List<User> votes = new ArrayList<>();
 
     public void addComment(Comment comment) {
         comments.add(comment);
     }
 
-    public void addVote(User user, Integer vote){
-        if (!votes.containsKey(user)) {
-            votes.put(user, vote);
+    public void addVote(User user){
+        if (votes.contains(user)) {
+            votes.remove(user);
+        } else {
+            votes.add(user);
         }
     }
 
-    public Integer didUserVoted(User user) {
-        return votes.getOrDefault(user, null);
+    public boolean didUserVoted(User user) {
+        return votes.contains(user);
     }
 }

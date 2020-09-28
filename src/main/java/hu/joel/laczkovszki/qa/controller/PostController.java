@@ -1,6 +1,7 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
+import hu.joel.laczkovszki.qa.infoView.PostInfoView;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +21,23 @@ public class PostController {
     }
 
     @GetMapping("/hobby-news/{id}")
-    public List<Post> getQuestionByHobby(@PathVariable("id") Long id) {
+    public Set<PostInfoView> getQuestionByHobby(@PathVariable("id") Long id) {
         return postService.getPostsByUserHobby(id);
     }
 
     @GetMapping("/friend-news/{id}")
-    public Set<Post> getQuestionsByFriend(@PathVariable("id") Long id) {
+    public Set<PostInfoView> getQuestionsByFriend(@PathVariable("id") Long id) {
         return postService.getPostsByFriends(id);
     }
 
-    @GetMapping("/posts")
-    public List<Post> getPosts() {
-        return postService.getAllPost();
-    }
+//    @GetMapping("/posts")
+//    public Set<PostInfoView> getPosts() {
+//        return postService.getAllPost();
+//    }
 
-    @GetMapping("/post/{id}")
-    public Post getPost(@PathVariable("id") Long id) {
-        return postService.getPostById(id);
+    @GetMapping("/post/{id}/{session}")
+    public PostInfoView getPost(@PathVariable("id") Long id, @PathVariable("session") Long session) {
+        return postService.getPostById(id, session);
     }
 
     @PostMapping("/post/add")
@@ -55,21 +56,19 @@ public class PostController {
         postService.removePostById(id);
     }
 
-    @GetMapping("posts-by-user-id/{userId}")
-    public List<Post> getQuestions_byUserId(@PathVariable("userId") Long userId) {
+    @GetMapping("post/posts-by-user-id/{userId}")
+    public Set<PostInfoView> getQuestions_byUserId(@PathVariable("userId") Long userId) {
         return postService.getAllPost_byUserId(userId);
     }
 
-    @GetMapping("post/{postId}/vote/{userId}/{vote}")
+    @GetMapping("post/{postId}/vote/{userId}")
     public void voteOnPost(@PathVariable("postId") Long postId,
-                           @PathVariable("userId") Long userId,
-                           @PathVariable("vote") Integer vote) {
-        postService.addVote(postId, userId, vote);
+                           @PathVariable("userId") Long userId) {
+        postService.addVote(postId, userId);
     }
 
-    @GetMapping("post/{postId}/get-vote/{userId}")
-    public Integer getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
-        Integer vote = postService.getVote(postID, userId);
-        return vote != null ? vote : 0;
-    }
+//    @GetMapping("post/{postId}/get-vote/{userId}")
+//    public boolean getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
+//        return postService.getVote(postID, userId);
+//    }
 }

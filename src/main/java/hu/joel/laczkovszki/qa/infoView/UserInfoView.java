@@ -1,4 +1,4 @@
-package hu.joel.laczkovszki.qa.model;
+package hu.joel.laczkovszki.qa.infoView;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

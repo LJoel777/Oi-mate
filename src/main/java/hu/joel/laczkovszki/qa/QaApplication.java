@@ -41,7 +41,6 @@ public class QaApplication {
                     .emailAddress("werneem@mark.com")
                     .fieldsOfInterest("stream")
                     .fieldsOfInterest("gaming")
-//                    .friends(new ArrayList<>())
                     .build();
             User joel = User.builder()
                     .username("Szaknoel10")

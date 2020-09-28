@@ -3,13 +3,12 @@ package hu.joel.laczkovszki.qa.controller;
 
 import hu.joel.laczkovszki.qa.model.Session;
 import hu.joel.laczkovszki.qa.model.User;
-import hu.joel.laczkovszki.qa.model.UserInfoView;
+import hu.joel.laczkovszki.qa.infoView.UserInfoView;
 import hu.joel.laczkovszki.qa.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
