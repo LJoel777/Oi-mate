@@ -1,5 +1,6 @@
 package hu.joel.laczkovszki.qa.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

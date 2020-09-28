@@ -28,7 +28,6 @@ public class MessageService {
         for (Message message: messages) {
             messageViews.add(new MessageView(message.getMsg(), message.getUsername()));
         }
-        System.out.println(messageViews);
         return messageViews;
     }
 }

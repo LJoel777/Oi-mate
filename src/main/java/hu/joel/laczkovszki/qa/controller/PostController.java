@@ -20,12 +20,12 @@ public class PostController {
     }
 
     @GetMapping("/hobby-news/{id}")
-    public List<Post> getQuestionByHobby (@PathVariable("id") Long id) {
+    public List<Post> getQuestionByHobby(@PathVariable("id") Long id) {
         return postService.getPostsByUserHobby(id);
     }
 
     @GetMapping("/friend-news/{id}")
-    public Set<Post> getQuestionsByFriend (@PathVariable("id") Long id) {
+    public Set<Post> getQuestionsByFriend(@PathVariable("id") Long id) {
         return postService.getPostsByFriends(id);
     }
 
