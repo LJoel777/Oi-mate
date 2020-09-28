@@ -29,6 +29,7 @@ public class CommentController {
 
     @PostMapping("/answer/add")
     public Long addAnswer(@RequestBody Comment comment) {
+        System.out.println(comment);
         commentService.addComment(comment);
         return comment.getPostId();
     }

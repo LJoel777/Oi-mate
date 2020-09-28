@@ -25,7 +25,6 @@ public class MessageController {
 
     @GetMapping("/get-messages/{topic}")
     public Set<MessageView> getMessagesByTopic(@PathVariable("topic") String topic) {
-        System.out.println(messageService.getMessagesByTopic(topic));
         return messageService.getMessagesByTopic(topic);
     }
 }
