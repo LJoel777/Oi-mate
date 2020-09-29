@@ -1,8 +1,7 @@
 package hu.joel.laczkovszki.qa.controller;
 
-import hu.joel.laczkovszki.qa.model.User;
+import hu.joel.laczkovszki.qa.infoView.UserInfoView;
 import hu.joel.laczkovszki.qa.model.UserCredentials;
-import hu.joel.laczkovszki.qa.model.UserInfoView;
 import hu.joel.laczkovszki.qa.security.JwtTokenServices;
 import hu.joel.laczkovszki.qa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserCredentials data) {
+    public ResponseEntity<Object> login(@RequestBody UserCredentials data) {
         try {
             String username = data.getUsername();
             UserInfoView user = userService.getUserByUserName(username);

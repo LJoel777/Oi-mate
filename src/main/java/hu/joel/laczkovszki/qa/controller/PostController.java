@@ -52,12 +52,12 @@ public class PostController {
         postService.removePostById(id);
     }
 
-    @GetMapping("/posts-by-user-id/{userId}")
+    @GetMapping("posts-by-user-id/{userId}")
     public Set<PostInfoView> getQuestions_byUserId(@PathVariable("userId") Long userId) {
         return postService.getAllPost_byUserId(userId);
     }
 
-    @GetMapping("/{postId}/vote/{userId}")
+    @GetMapping("{postId}/vote/{userId}")
     public void voteOnPost(@PathVariable("postId") Long postId,
                            @PathVariable("userId") Long userId) {
         postService.addVote(postId, userId);
