@@ -11,16 +11,17 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final NotificationService notificationService;
 
     @Autowired
-    public UserService(UserRepository userRepository, NotificationService notificationService) {
+    NotificationService notificationService;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.notificationService = notificationService;
     }
 
     public User getNormalUser(Long id) {
-        return userRepository.getOne(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     public UserInfoView getUser(Long id) {

@@ -15,14 +15,16 @@ import java.util.*;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final UserService userService;
-    private final NotificationService notificationService ;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserService userService) {
+    UserService userService;
+
+    @Autowired
+    NotificationService notificationService ;
+
+    @Autowired
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.userService = userService;
-        this.notificationService = notificationService;
     }
 
     public void addPost(Post post) {
@@ -34,7 +36,7 @@ public class PostService {
         }
     }
 
-    public PostInfoView getPostById(Long postId, Long userId) {
+    public PostInfoView getPostInfoViewById(Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
         if (post != null) {
             UserInfoView userInfoView = userService.getUser(post.getUser().getId());
@@ -114,5 +116,9 @@ public class PostService {
                     .build());
         });
         return postInfoViews;
+    }
+
+    public Post getNormalPost(Long postId) {
+        return postRepository.findById(postId).orElse(null);
     }
 }

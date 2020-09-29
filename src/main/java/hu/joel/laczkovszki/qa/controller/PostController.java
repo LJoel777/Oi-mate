@@ -7,7 +7,6 @@ import hu.joel.laczkovszki.qa.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,7 +32,7 @@ public class PostController {
 
     @GetMapping("{id}/{session}")
     public PostInfoView getPost(@PathVariable("id") Long id, @PathVariable("session") Long session) {
-        return postService.getPostById(id, session);
+        return postService.getPostInfoViewById(id, session);
     }
 
     @PostMapping("add")

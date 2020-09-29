@@ -20,7 +20,7 @@ public class NotificationService {
     }
 
     public void addCommentNotification(Comment comment) {
-        Post post = postService.getPostById(comment.getPostId());
+        Post post = postService.getNormalPost(comment.getPostId());
         User owner = post.getUser();
         User sender = userService.getNormalUser(comment.getUserId());
         Notification notification = Notification.builder()
