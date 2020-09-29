@@ -11,10 +11,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, NotificationService notificationService) {
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     public User getNormalUser(Long id) {
@@ -94,5 +96,12 @@ public class UserService {
         updatedUser.setProfilePicture(user.getProfilePicture());
         updatedUser.setUsername(user.getUsername());
         userRepository.save(updatedUser);
+    }
+
+    public void sendFriendRequest(Long userId, Long friendId) {
+        User owner = userRepository.findById(userId).orElse(null);
+        User sender = userRepository.findById(friendId).orElse(null);
+
+        notificationService.addFriendRequestNotification(owner,sender);
     }
 }

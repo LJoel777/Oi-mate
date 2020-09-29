@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("{friendId}/add-friend/{userId}")
     public Set<Long> addFriendToUser(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
-        userService.addFriendToUser(userId, friendId);
+        userService.sendFriendRequest(userId, friendId);
         return userService.getUser(friendId).getFriends();
     }
 

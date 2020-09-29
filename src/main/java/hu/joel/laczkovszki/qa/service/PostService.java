@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 
@@ -16,11 +15,13 @@ import java.util.*;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService ;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, NotificationService notificationService) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     public void addPost(Post post) {
@@ -77,6 +78,7 @@ public class PostService {
         Post post = postRepository.findById(postId).orElse(null);
         User user = userRepository.findById(userId).orElse(null);
         if (post != null && user != null && (vote == 1 || vote == -1)) {
+            notificationService.addPostVoteNotification(user,post);
             post.addVote(user, vote);
             postRepository.save(post);
         }

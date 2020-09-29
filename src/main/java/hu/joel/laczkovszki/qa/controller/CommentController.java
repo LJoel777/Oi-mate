@@ -2,6 +2,7 @@ package hu.joel.laczkovszki.qa.controller;
 
 import hu.joel.laczkovszki.qa.model.Comment;
 import hu.joel.laczkovszki.qa.service.CommentService;
+import hu.joel.laczkovszki.qa.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
