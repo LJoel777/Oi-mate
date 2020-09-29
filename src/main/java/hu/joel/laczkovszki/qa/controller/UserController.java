@@ -1,11 +1,13 @@
 package hu.joel.laczkovszki.qa.controller;
 
-
-import hu.joel.laczkovszki.qa.model.UserInfoView;
+import hu.joel.laczkovszki.qa.model.Session;
+import hu.joel.laczkovszki.qa.model.User;
+import hu.joel.laczkovszki.qa.infoView.UserInfoView;
 import hu.joel.laczkovszki.qa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
