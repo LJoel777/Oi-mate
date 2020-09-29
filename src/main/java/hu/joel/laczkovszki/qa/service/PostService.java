@@ -1,9 +1,10 @@
 package hu.joel.laczkovszki.qa.service;
 
+import hu.joel.laczkovszki.qa.infoView.PostInfoView;
+import hu.joel.laczkovszki.qa.infoView.UserInfoView;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.repository.PostRepository;
-import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +15,18 @@ import java.util.*;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final NotificationService notificationService ;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository, NotificationService notificationService) {
+    public PostService(PostRepository postRepository, UserService userService) {
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.notificationService = notificationService;
     }
 
     public void addPost(Post post) {
-        User user = userRepository.findById(post.getUserId()).orElse(null);
+        User user = userService.getNormalUser(post.getUserId());
         if (user != null) {
             post.setUser(user);
             user.addPost(post);
@@ -33,8 +34,22 @@ public class PostService {
         }
     }
 
-    public Post getPostById(Long id) {
-        return postRepository.findById(id).orElse(null);
+    public PostInfoView getPostById(Long postId, Long userId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        if (post != null) {
+            UserInfoView userInfoView = userService.getUser(post.getUser().getId());
+            return PostInfoView.builder()
+                    .postId(post.getId())
+                    .userId(post.getUser().getId())
+                    .description(post.getDescription())
+                    .imagePath(post.getImagePath())
+                    .categories(post.getCategories())
+                    .userInfoView(userInfoView)
+                    .voteNumber(post.getVotes().size())
+                    .isUserVoted(post.didUserVoted(userService.getNormalUser(userId)))
+                    .build();
+        }
+        return null;
     }
 
     public void removePostById(Long id) {
@@ -48,45 +63,56 @@ public class PostService {
         postRepository.save(updatedPost);
     }
 
-    public List<Post> getAllPost() {
-        return postRepository.findAll();
+    public Set<PostInfoView> getAllPost_byUserId(Long userId) {
+        Set<Post> posts = postRepository.findAllByUserId(userId);
+        return convertPosts(posts, userId);
     }
 
-    public List<Post> getAllPost_byUserId(Long userId) {
-        return postRepository.findAllByUserId(userId);
-    }
-
-    public List<Post> getPostsByUserHobby(Long id) {
-        User user = userRepository.findById(id).orElse(null);
+    public Set<PostInfoView> getPostsByUserHobby(Long userId) {
+        User user = userService.getNormalUser(userId);
         if (user != null) {
             List<String> hobbies = user.getFieldsOfInterests();
-            return postRepository.findAllByCategoriesIn(hobbies);
-        }
-        return new ArrayList<>();
-    }
-
-    public Set<Post> getPostsByFriends(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            Set<User> friends = user.getFriends();
-            return postRepository.findAllByUserIsIn(friends);
+            Set<Post> posts = postRepository.findAllByCategoriesIn(hobbies);
+            return convertPosts(posts, userId);
         }
         return new HashSet<>();
     }
 
-    public void addVote(Long postId, Long userId, Integer vote) {
+    public Set<PostInfoView> getPostsByFriends(Long userId) {
+        User user = userService.getNormalUser(userId);
+        if (user != null) {
+            Set<User> friends = user.getFriends();
+            Set<Post> posts = postRepository.findAllByUserIsIn(friends);
+            return convertPosts(posts, userId);
+        }
+        return new HashSet<>();
+    }
+
+    public void addVote(Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
-        User user = userRepository.findById(userId).orElse(null);
-        if (post != null && user != null && (vote == 1 || vote == -1)) {
+        User user = userService.getNormalUser(userId);
+        if (post != null && user != null) {
             notificationService.addPostVoteNotification(user,post);
-            post.addVote(user, vote);
+            post.addVote(user);
             postRepository.save(post);
         }
     }
 
-    public Integer getVote(Long postID, Long userId) {
-        Post post = postRepository.findById(postID).orElse(null);
-        User user = userRepository.findById(userId).orElse(null);
-        return (post != null && user != null) ? post.didUserVoted(user) : null;
+    public Set<PostInfoView> convertPosts(Set<Post> posts, Long session) {
+        Set<PostInfoView> postInfoViews = new HashSet<>();
+        posts.forEach(post -> {
+            UserInfoView userInfoView = userService.getUser(post.getUser().getId());
+            postInfoViews.add(PostInfoView.builder()
+                    .userInfoView(userInfoView)
+                    .voteNumber(post.getVotes().size())
+                    .categories(post.getCategories())
+                    .imagePath(post.getImagePath())
+                    .description(post.getDescription())
+                    .userId(post.getUser().getId())
+                    .postId(post.getId())
+                    .isUserVoted(post.didUserVoted(userService.getNormalUser(session)))
+                    .build());
+        });
+        return postInfoViews;
     }
 }

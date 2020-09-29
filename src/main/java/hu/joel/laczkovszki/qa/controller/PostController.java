@@ -1,6 +1,7 @@
 package hu.joel.laczkovszki.qa.controller;
 
 
+import hu.joel.laczkovszki.qa.infoView.PostInfoView;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +22,18 @@ public class PostController {
     }
 
     @GetMapping("hobby-news/{id}")
-    public List<Post> getQuestionByHobby(@PathVariable("id") Long id) {
-        System.out.println("na");
+    public Set<PostInfoView> getQuestionByHobby(@PathVariable("id") Long id) {
         return postService.getPostsByUserHobby(id);
     }
 
     @GetMapping("friend-news/{id}")
-    public Set<Post> getQuestionsByFriend(@PathVariable("id") Long id) {
+    public Set<PostInfoView> getQuestionsByFriend(@PathVariable("id") Long id) {
         return postService.getPostsByFriends(id);
     }
 
-    @GetMapping("posts")
-    public List<Post> getPosts() {
-        return postService.getAllPost();
-    }
-
-    @GetMapping("{id}")
-    public Post getPost(@PathVariable("id") Long id) {
-        return postService.getPostById(id);
+    @GetMapping("{id}/{session}")
+    public PostInfoView getPost(@PathVariable("id") Long id, @PathVariable("session") Long session) {
+        return postService.getPostById(id, session);
     }
 
     @PostMapping("add")
@@ -58,20 +53,13 @@ public class PostController {
     }
 
     @GetMapping("posts-by-user-id/{userId}")
-    public List<Post> getQuestions_byUserId(@PathVariable("userId") Long userId) {
+    public Set<PostInfoView> getQuestions_byUserId(@PathVariable("userId") Long userId) {
         return postService.getAllPost_byUserId(userId);
     }
 
-    @GetMapping("{postId}/vote/{userId}/{vote}")
+    @GetMapping("{postId}/vote/{userId}")
     public void voteOnPost(@PathVariable("postId") Long postId,
-                           @PathVariable("userId") Long userId,
-                           @PathVariable("vote") Integer vote) {
-        postService.addVote(postId, userId, vote);
-    }
-
-    @GetMapping("{postId}/get-vote/{userId}")
-    public Integer getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
-        Integer vote = postService.getVote(postID, userId);
-        return vote != null ? vote : 0;
+                           @PathVariable("userId") Long userId) {
+        postService.addVote(postId, userId);
     }
 }

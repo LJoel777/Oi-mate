@@ -11,9 +11,9 @@ import java.util.Set;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT p FROM Post p WHERE p.user.id = :id")
-    List<Post> findAllByUserId(@Param("id") Long id);
+    Set<Post> findAllByUserId(@Param("id") Long id);
 
-    List<Post> findAllByCategoriesIn(List<String> categories);
+    Set<Post> findAllByCategoriesIn(List<String> categories);
 
     Set<Post> findAllByUserIsIn(Set<User> users);
 }
