@@ -12,7 +12,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/post")
+@RequestMapping("post/")
 public class PostController {
     private PostService postService;
 
@@ -21,33 +21,33 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/hobby-news/{id}")
+    @GetMapping("hobby-news/{id}")
     public Set<PostInfoView> getQuestionByHobby(@PathVariable("id") Long id) {
         return postService.getPostsByUserHobby(id);
     }
 
-    @GetMapping("/friend-news/{id}")
+    @GetMapping("friend-news/{id}")
     public Set<PostInfoView> getQuestionsByFriend(@PathVariable("id") Long id) {
         return postService.getPostsByFriends(id);
     }
 
-    @GetMapping("/{id}/{session}")
+    @GetMapping("{id}/{session}")
     public PostInfoView getPost(@PathVariable("id") Long id, @PathVariable("session") Long session) {
         return postService.getPostById(id, session);
     }
 
-    @PostMapping("/add")
+    @PostMapping("add")
     public Long addQuestion(@RequestBody Post post) {
         postService.addPost(post);
         return post.getId();
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("{id}/update")
     public void updateQuestion(@PathVariable("id") Long id, @RequestBody Post post) {
         postService.updatePostById(id, post);
     }
 
-    @GetMapping("/{id}/remove")
+    @GetMapping("{id}/remove")
     public void removeQuestion(@PathVariable("id") Long id) {
         postService.removePostById(id);
     }

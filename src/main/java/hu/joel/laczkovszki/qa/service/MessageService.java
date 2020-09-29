@@ -6,7 +6,10 @@ import hu.joel.laczkovszki.qa.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -22,9 +25,9 @@ public class MessageService {
         messageRepository.save(message);
     }
 
-    public Set<MessageView> getMessagesByTopic(String topic) {
-        Set<Message> messages = messageRepository.findAllByTopic(topic);
-        Set<MessageView> messageViews = new HashSet<>();
+    public List<MessageView> getMessagesByTopic(String topic) {
+        List<Message> messages = messageRepository.findAllByTopicOrderByTimestamp(topic);
+        List<MessageView> messageViews = new ArrayList<>();
         for (Message message: messages) {
             messageViews.add(new MessageView(message.getMsg(), message.getUsername()));
         }

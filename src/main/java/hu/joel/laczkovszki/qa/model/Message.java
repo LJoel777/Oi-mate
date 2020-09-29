@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +22,6 @@ public class Message {
     private String topic;
     private String msg;
     private String username;
+    private Date timestamp;
 
 }

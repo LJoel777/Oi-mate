@@ -38,6 +38,23 @@ public class UserService {
         return null;
     }
 
+    public UserInfoView getUserByUserName(String username) {
+        User user = userRepository.findUserByUsername(username).orElse(null);
+        if (user  != null) {
+            return UserInfoView.builder()
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .emailAddress(user.getEmailAddress())
+                    .fieldsOfInterests(user.getFieldsOfInterests())
+                    .profilePicture(user.getProfilePicture())
+                    .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
+                    .build();
+        }
+        return null;
+    }
+
     public User findByEmail(String email){
         try {
 
