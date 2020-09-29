@@ -6,7 +6,8 @@ import hu.joel.laczkovszki.qa.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -20,11 +21,12 @@ public class MessageController {
 
     @PostMapping("/send-message")
     public void addMessage(@RequestBody Message message) {
+        message.setTimestamp(new Date());
         messageService.addMessage(message);
     }
 
     @GetMapping("/get-messages/{topic}")
-    public Set<MessageView> getMessagesByTopic(@PathVariable("topic") String topic) {
+    public List<MessageView> getMessagesByTopic(@PathVariable("topic") String topic) {
         System.out.println(messageService.getMessagesByTopic(topic));
         return messageService.getMessagesByTopic(topic);
     }
