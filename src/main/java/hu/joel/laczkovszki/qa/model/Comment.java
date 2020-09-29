@@ -1,5 +1,6 @@
 package hu.joel.laczkovszki.qa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class Comment {
     @ManyToOne
     private User user;
     @ElementCollection
+    @JsonIgnore
     private Map<User, Integer> votes = new HashMap<>();
 
     public void addVote(User user, Integer vote){

@@ -11,6 +11,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("message/")
 public class MessageController {
     private MessageService messageService;
 
@@ -19,13 +20,13 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @PostMapping("/send-message")
+    @PostMapping("send-message")
     public void addMessage(@RequestBody Message message) {
         message.setTimestamp(new Date());
         messageService.addMessage(message);
     }
 
-    @GetMapping("/get-messages/{topic}")
+    @GetMapping("get-messages/{topic}")
     public List<MessageView> getMessagesByTopic(@PathVariable("topic") String topic) {
         System.out.println(messageService.getMessagesByTopic(topic));
         return messageService.getMessagesByTopic(topic);

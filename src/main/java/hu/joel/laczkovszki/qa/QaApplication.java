@@ -12,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @SpringBootApplication
@@ -24,6 +26,7 @@ public class QaApplication {
 
     @Autowired
     PostRepository postRepository;
+    PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(QaApplication.class, args);
@@ -32,7 +35,8 @@ public class QaApplication {
     @Bean
     public CommandLineRunner init() {
         return args -> {
-            String psw = BCrypt.hashpw("almafa",BCrypt.gensalt(10));
+            passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+            String psw = passwordEncoder.encode("almafa");
             User werneerm = User.builder()
                     .username("werneerm")
                     .psw(psw)
@@ -60,7 +64,7 @@ public class QaApplication {
                     .fieldsOfInterest("stream")
                     .fieldsOfInterest("programing")
                     .lastName("Illyes")
-                    .lastName("Gergo")
+                    .firstName("Gergo")
                     .emailAddress("gergo@gergo.com")
                     .profilePicture("https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/72793449_2576453445767045_7918286579754336256_n.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_ohc=7ze_ahWdAv0AX8yW9uZ&_nc_ht=scontent-vie1-1.xx&oh=4a243f16e56a977ecc3f2deb95037112&oe=5F7597D8")
                     .build();
