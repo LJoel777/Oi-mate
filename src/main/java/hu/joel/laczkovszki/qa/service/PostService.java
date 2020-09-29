@@ -61,10 +61,6 @@ public class PostService {
         postRepository.save(updatedPost);
     }
 
-//    public List<Post> getAllPost() {
-//        return postRepository.findAll();
-//    }
-
     public Set<PostInfoView> getAllPost_byUserId(Long userId) {
         Set<Post> posts = postRepository.findAllByUserId(userId);
         return convertPosts(posts, userId);
@@ -98,12 +94,6 @@ public class PostService {
             postRepository.save(post);
         }
     }
-
-//    public boolean getVote(Long postID, Long userId) {
-//        Post post = postRepository.findById(postID).orElse(null);
-//        User user = userService.getNormalUser(userId);
-//        return (post == null || user == null) || post.didUserVoted(user);
-//    }
 
     public Set<PostInfoView> convertPosts(Set<Post> posts, Long session) {
         Set<PostInfoView> postInfoViews = new HashSet<>();

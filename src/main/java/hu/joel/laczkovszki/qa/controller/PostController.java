@@ -12,6 +12,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("/post")
 public class PostController {
     private PostService postService;
 
@@ -30,45 +31,35 @@ public class PostController {
         return postService.getPostsByFriends(id);
     }
 
-//    @GetMapping("/posts")
-//    public Set<PostInfoView> getPosts() {
-//        return postService.getAllPost();
-//    }
-
-    @GetMapping("/post/{id}/{session}")
+    @GetMapping("/{id}/{session}")
     public PostInfoView getPost(@PathVariable("id") Long id, @PathVariable("session") Long session) {
         return postService.getPostById(id, session);
     }
 
-    @PostMapping("/post/add")
+    @PostMapping("/add")
     public Long addQuestion(@RequestBody Post post) {
         postService.addPost(post);
         return post.getId();
     }
 
-    @PostMapping("/post/{id}/update")
+    @PostMapping("/{id}/update")
     public void updateQuestion(@PathVariable("id") Long id, @RequestBody Post post) {
         postService.updatePostById(id, post);
     }
 
-    @GetMapping("post/{id}/remove")
+    @GetMapping("/{id}/remove")
     public void removeQuestion(@PathVariable("id") Long id) {
         postService.removePostById(id);
     }
 
-    @GetMapping("post/posts-by-user-id/{userId}")
+    @GetMapping("/posts-by-user-id/{userId}")
     public Set<PostInfoView> getQuestions_byUserId(@PathVariable("userId") Long userId) {
         return postService.getAllPost_byUserId(userId);
     }
 
-    @GetMapping("post/{postId}/vote/{userId}")
+    @GetMapping("/{postId}/vote/{userId}")
     public void voteOnPost(@PathVariable("postId") Long postId,
                            @PathVariable("userId") Long userId) {
         postService.addVote(postId, userId);
     }
-
-//    @GetMapping("post/{postId}/get-vote/{userId}")
-//    public boolean getVote(@PathVariable("postId") Long postID, @PathVariable("userId") Long userId) {
-//        return postService.getVote(postID, userId);
-//    }
 }
