@@ -16,18 +16,21 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository, NotificationService notificationService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     public void addComment(Comment comment) {
         Post post = postRepository.findById(comment.getPostId()).orElse(null);
         User user = userRepository.findById(comment.getUserId()).orElse(null);
         if (post != null && user != null) {
+            addNotification(comment);
             comment.setUser(user);
             comment.setPost(post);
             post.addComment(comment);
@@ -68,5 +71,10 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElse(null);
         User user = userRepository.findById(userId).orElse(null);
         return (comment != null && user != null) ? comment.didUserVoted(user) : null;
+    }
+
+    public void addNotification(Comment comment) {
+        notificationService.addCommentNotification(comment);
+
     }
 }

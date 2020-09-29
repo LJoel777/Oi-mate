@@ -16,11 +16,13 @@ import java.util.*;
 public class PostService {
     private final PostRepository postRepository;
     private final UserService userService;
+    private final NotificationService notificationService ;
 
     @Autowired
     public PostService(PostRepository postRepository, UserService userService) {
         this.postRepository = postRepository;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     public void addPost(Post post) {
@@ -90,6 +92,7 @@ public class PostService {
         Post post = postRepository.findById(postId).orElse(null);
         User user = userService.getNormalUser(userId);
         if (post != null && user != null) {
+            notificationService.addPostVoteNotification(user,post);
             post.addVote(user);
             postRepository.save(post);
         }

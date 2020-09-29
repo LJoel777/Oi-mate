@@ -49,6 +49,11 @@ public class User {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    @JsonIgnore
+    @Singular
+    @OneToMany(mappedBy = "owner",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    List<Notification>notifications = new ArrayList<>();
+
     public void addPost(Post post) {
         posts.add(post);
     }
