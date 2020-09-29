@@ -71,6 +71,10 @@ public class User {
         this.friends.remove(user);
     }
 
+    public void removeNotification(Notification notification) {
+        this.notifications.remove(notification);
+    }
+
 
 }
 

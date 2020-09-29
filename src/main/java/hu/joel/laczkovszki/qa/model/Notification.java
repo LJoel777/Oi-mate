@@ -24,14 +24,10 @@ public class Notification {
     @NonNull
     User owner;
 
-
-
     @JsonIgnore
     @OneToOne
     @NonNull
     User sender;
-
-
 
     @JsonIgnore
     @OneToOne

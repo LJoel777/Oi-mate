@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post/**").authenticated()
                 .antMatchers("/answer/**").authenticated()
                 .antMatchers("/message/**").authenticated()
+                .antMatchers("/notification/**").authenticated()
                 .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class);

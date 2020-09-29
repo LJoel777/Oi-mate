@@ -1,9 +1,15 @@
 package hu.joel.laczkovszki.qa.service;
 
+import hu.joel.laczkovszki.qa.infoView.NotificationInfoView;
 import hu.joel.laczkovszki.qa.model.*;
 import hu.joel.laczkovszki.qa.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class NotificationService {
@@ -50,5 +56,29 @@ public class NotificationService {
                 .post(null)
                 .build();
         notificationRepository.save(notification);
+    }
+
+    public List<NotificationInfoView> getAllNotificationByUserId(Long userId) {
+        User user = userService.getNormalUser(userId);
+        if (user!= null) {
+            List<Notification> notifications= user.getNotifications();
+            List<NotificationInfoView> notificationInfoViews = new ArrayList<>();
+            notifications.forEach(not -> {
+                notificationInfoViews.add(NotificationInfoView.builder()
+                        .notificationType(not.getNotificationType())
+                        .ownerId(not.getOwner().getId())
+                        .senderId(not.getSender().getId())
+                        .postId(not.getPost().getId())
+                        .id(not.getId())
+                        .build());
+            });
+            return notificationInfoViews;
+        }
+        return new ArrayList<>();
+    }
+
+    public void deleteNotification(Long notId) {
+        notificationRepository.deleteById(notId);
+
     }
 }
