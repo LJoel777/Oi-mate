@@ -22,12 +22,12 @@ public class PostController {
 
     @GetMapping("hobby-news/{id}")
     public Set<PostInfoView> getQuestionByHobby(@PathVariable("id") Long id) {
-        return postService.getPostsByUserHobby(id);
+        return postService.getPostInfoViewssByUserHobby(id);
     }
 
     @GetMapping("friend-news/{id}")
     public Set<PostInfoView> getQuestionsByFriend(@PathVariable("id") Long id) {
-        return postService.getPostsByFriends(id);
+        return postService.getPostInfoViewsByFriends(id);
     }
 
     @GetMapping("{id}/{session}")
@@ -53,7 +53,7 @@ public class PostController {
 
     @GetMapping("posts-by-user-id/{userId}")
     public Set<PostInfoView> getQuestions_byUserId(@PathVariable("userId") Long userId) {
-        return postService.getAllPost_byUserId(userId);
+        return postService.getAllPostInfoViewsByUserId(userId);
     }
 
     @GetMapping("{postId}/vote/{userId}")

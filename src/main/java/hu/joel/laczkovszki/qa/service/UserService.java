@@ -20,52 +20,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getNormalUser(Long id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public UserInfoView getUser(Long id) {
+    public UserInfoView getUserInfoView(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user  != null) {
-            return UserInfoView.builder()
-                    .id(id)
-                    .username(user.getUsername())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .emailAddress(user.getEmailAddress())
-                    .fieldsOfInterests(user.getFieldsOfInterests())
-                    .profilePicture(user.getProfilePicture())
-                    .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
-                    .build();
+            return convertUser(user);
         }
         return null;
     }
 
-    public UserInfoView getUserByUserName(String username) {
+    public UserInfoView getUserInfoViewByUserName(String username) {
         User user = userRepository.findUserByUsername(username).orElse(null);
         if (user  != null) {
-            return UserInfoView.builder()
-                    .id(user.getId())
-                    .username(user.getUsername())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .emailAddress(user.getEmailAddress())
-                    .fieldsOfInterests(user.getFieldsOfInterests())
-                    .profilePicture(user.getProfilePicture())
-                    .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
-                    .build();
+            return convertUser(user);
         }
         return null;
-    }
-
-    public User findByEmail(String email){
-        try {
-
-            return userRepository.findByEmailAddress(email);
-        }
-        catch (NullPointerException e){
-            return null;
-        }
     }
 
     public void addUser(User user) {
@@ -104,5 +76,18 @@ public class UserService {
         User sender = userRepository.findById(friendId).orElse(null);
 
         notificationService.addFriendRequestNotification(owner,sender);
+    }
+
+    public UserInfoView convertUser(User user) {
+        return UserInfoView.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .emailAddress(user.getEmailAddress())
+                .fieldsOfInterests(user.getFieldsOfInterests())
+                .profilePicture(user.getProfilePicture())
+                .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
+                .build();
     }
 }

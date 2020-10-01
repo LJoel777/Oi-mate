@@ -44,7 +44,7 @@ public class LoginController {
     public ResponseEntity<Object> login(@RequestBody UserCredentials data) {
         try {
             String username = data.getUsername();
-            UserInfoView user = userService.getUserByUserName(username);
+            UserInfoView user = userService.getUserInfoViewByUserName(username);
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             List<String> roles = authentication.getAuthorities()
                     .stream()

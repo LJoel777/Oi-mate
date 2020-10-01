@@ -28,7 +28,7 @@ public class PostService {
     }
 
     public void addPost(Post post) {
-        User user = userService.getNormalUser(post.getUserId());
+        User user = userService.getUserById(post.getUserId());
         if (user != null) {
             post.setUser(user);
             user.addPost(post);
@@ -39,7 +39,7 @@ public class PostService {
     public PostInfoView getPostInfoViewById(Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
         if (post != null) {
-            UserInfoView userInfoView = userService.getUser(post.getUser().getId());
+            UserInfoView userInfoView = userService.getUserInfoView(post.getUser().getId());
             return PostInfoView.builder()
                     .postId(post.getId())
                     .userId(post.getUser().getId())
@@ -48,7 +48,7 @@ public class PostService {
                     .categories(post.getCategories())
                     .userInfoView(userInfoView)
                     .voteNumber(post.getVotes().size())
-                    .isUserVoted(post.didUserVoted(userService.getNormalUser(userId)))
+                    .isUserVoted(post.didUserVoted(userService.getUserById(userId)))
                     .build();
         }
         return null;
@@ -65,13 +65,13 @@ public class PostService {
         postRepository.save(updatedPost);
     }
 
-    public Set<PostInfoView> getAllPost_byUserId(Long userId) {
+    public Set<PostInfoView> getAllPostInfoViewsByUserId(Long userId) {
         Set<Post> posts = postRepository.findAllByUserId(userId);
         return convertPosts(posts, userId);
     }
 
-    public Set<PostInfoView> getPostsByUserHobby(Long userId) {
-        User user = userService.getNormalUser(userId);
+    public Set<PostInfoView> getPostInfoViewssByUserHobby(Long userId) {
+        User user = userService.getUserById(userId);
         if (user != null) {
             List<String> hobbies = user.getFieldsOfInterests();
             Set<Post> posts = postRepository.findAllByCategoriesIn(hobbies);
@@ -80,8 +80,8 @@ public class PostService {
         return new HashSet<>();
     }
 
-    public Set<PostInfoView> getPostsByFriends(Long userId) {
-        User user = userService.getNormalUser(userId);
+    public Set<PostInfoView> getPostInfoViewsByFriends(Long userId) {
+        User user = userService.getUserById(userId);
         if (user != null) {
             Set<User> friends = user.getFriends();
             Set<Post> posts = postRepository.findAllByUserIsIn(friends);
@@ -92,7 +92,7 @@ public class PostService {
 
     public void addVote(Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
-        User user = userService.getNormalUser(userId);
+        User user = userService.getUserById(userId);
         if (post != null && user != null) {
             notificationService.addPostVoteNotification(user,post);
             post.addVote(user);
@@ -103,7 +103,7 @@ public class PostService {
     public Set<PostInfoView> convertPosts(Set<Post> posts, Long session) {
         Set<PostInfoView> postInfoViews = new HashSet<>();
         posts.forEach(post -> {
-            UserInfoView userInfoView = userService.getUser(post.getUser().getId());
+            UserInfoView userInfoView = userService.getUserInfoView(post.getUser().getId());
             postInfoViews.add(PostInfoView.builder()
                     .userInfoView(userInfoView)
                     .voteNumber(post.getVotes().size())
@@ -112,13 +112,18 @@ public class PostService {
                     .description(post.getDescription())
                     .userId(post.getUser().getId())
                     .postId(post.getId())
-                    .isUserVoted(post.didUserVoted(userService.getNormalUser(session)))
+                    .isUserVoted(post.didUserVoted(userService.getUserById(session)))
                     .build());
         });
         return postInfoViews;
     }
 
-    public Post getNormalPost(Long postId) {
+    public Post getPostById(Long postId) {
         return postRepository.findById(postId).orElse(null);
+    }
+
+    public Set<PostInfoView> getPostInfoViewsByTopic(String topic, Long session) {
+        Set<Post> posts = new HashSet<>(postRepository.findPostsByCategoriesIsContaining(topic));
+        return convertPosts(posts, session);
     }
 }
