@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class NotificationService {
@@ -26,9 +24,9 @@ public class NotificationService {
     }
 
     public void addCommentNotification(Comment comment) {
-        Post post = postService.getNormalPost(comment.getPostId());
+        Post post = postService.getPostById(comment.getPostId());
         User owner = post.getUser();
-        User sender = userService.getNormalUser(comment.getUserId());
+        User sender = userService.getUserById(comment.getUserId());
         Notification notification = Notification.builder()
                 .notificationType(NotificationType.COMMENT)
                 .owner(owner)
@@ -59,7 +57,7 @@ public class NotificationService {
     }
 
     public List<NotificationInfoView> getAllNotificationByUserId(Long userId) {
-        User user = userService.getNormalUser(userId);
+        User user = userService.getUserById(userId);
         if (user!= null) {
             List<Notification> notifications= user.getNotifications();
             List<NotificationInfoView> notificationInfoViews = new ArrayList<>();

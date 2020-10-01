@@ -1,8 +1,8 @@
 package hu.joel.laczkovszki.qa.controller;
 
+import hu.joel.laczkovszki.qa.infoView.CommentInfoView;
 import hu.joel.laczkovszki.qa.model.Comment;
 import hu.joel.laczkovszki.qa.service.CommentService;
-import hu.joel.laczkovszki.qa.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +19,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("answersByQuestionId/{questionId}")
-    public List<Comment> getAllCommentByPostId(@PathVariable("questionId") Long questionId) {
-        return commentService.getCommentsMyPostId(questionId);
+    @GetMapping("answersByQuestionId/{questionId}/{session}")
+    public List<CommentInfoView> getAllCommentByPostId(@PathVariable("questionId") Long questionId, @PathVariable("session") Long session) {
+        return commentService.getCommentInfoViewsByMyPostId(questionId, session);
     }
 
-    @GetMapping("{id}")
-    public Comment getAnswer(@PathVariable("id") Long id) {
-        return commentService.getCommentById(id);
+    @GetMapping("{id}/{session}")
+    public CommentInfoView getAnswer(@PathVariable("id") Long id, @PathVariable("session") Long session) {
+        return commentService.getCommentInfoViewById(id, session);
     }
 
     @PostMapping("add")
@@ -45,18 +45,5 @@ public class CommentController {
     @GetMapping("{id}/remove")
     public void removeAnswer(@PathVariable("id") Long id) {
         commentService.removeCommentById(id);
-    }
-
-    @GetMapping("{id}/vote/{userId}/{vote}")
-    public void addVote (@PathVariable("id") Long commentId,
-                         @PathVariable("userId") Long userId,
-                         @PathVariable("vote") Integer vote){
-        commentService.addVote(commentId, userId, vote);
-    }
-
-    @GetMapping("{id}/get-vote/{userId}")
-    public Integer getVote(@PathVariable("id") Long commentID, @PathVariable("userId") Long userId) {
-        Integer vote = commentService.getVote(commentID, userId);
-        return vote != null ? vote : 0;
     }
 }

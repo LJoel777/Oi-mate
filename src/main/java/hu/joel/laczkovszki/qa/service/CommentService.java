@@ -1,14 +1,16 @@
 package hu.joel.laczkovszki.qa.service;
 
+import hu.joel.laczkovszki.qa.infoView.CommentInfoView;
+import hu.joel.laczkovszki.qa.infoView.PostInfoView;
+import hu.joel.laczkovszki.qa.infoView.UserInfoView;
 import hu.joel.laczkovszki.qa.model.Comment;
 import hu.joel.laczkovszki.qa.model.Post;
 import hu.joel.laczkovszki.qa.model.User;
 import hu.joel.laczkovszki.qa.repository.CommentRepository;
-import hu.joel.laczkovszki.qa.repository.PostRepository;
-import hu.joel.laczkovszki.qa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +32,8 @@ public class CommentService {
     }
 
     public void addComment(Comment comment) {
-        Post post = postService.getNormalPost(comment.getPostId());
-        User user = userService.getNormalUser(comment.getUserId());
+        Post post = postService.getPostById(comment.getPostId());
+        User user = userService.getUserById(comment.getUserId());
         if (post != null && user != null) {
             addNotification(comment);
             comment.setUser(user);
@@ -46,6 +48,14 @@ public class CommentService {
         return commentRepository.findById(id).orElse(null);
     }
 
+    public CommentInfoView getCommentInfoViewById (Long id, Long session) {
+        Comment comment = getCommentById(id);
+        if (comment != null) {
+            return convertCommentToInfoView(comment, session);
+        }
+        return null;
+    }
+
     public void removeCommentById(Long id) {
         commentRepository.deleteById(id);
     }
@@ -57,26 +67,26 @@ public class CommentService {
         commentRepository.saveAndFlush(updatedComment);
     }
 
-    public List<Comment> getCommentsMyPostId(Long questionId) {
-        return commentRepository.getAllByPostId(questionId);
-    }
-
-    public void addVote(Long commentId, Long userId, Integer vote) {
-        Comment comment = commentRepository.findById(commentId).orElse(null);
-        User user = userService.getNormalUser(userId);
-        if (comment != null && user != null && (vote == 1 || vote == -1)) {
-            comment.addVote(user, vote);
-            commentRepository.save(comment);
-        }
-    }
-
-    public Integer getVote(Long commentId, Long userId) {
-        Comment comment = commentRepository.findById(commentId).orElse(null);
-        User user = userService.getNormalUser(userId);
-        return (comment != null && user != null) ? comment.didUserVoted(user) : null;
+    public List<CommentInfoView> getCommentInfoViewsByMyPostId(Long questionId, Long session) {
+        List<Comment> comments = commentRepository.getAllByPostId(questionId);
+        List<CommentInfoView> commentInfoViews= new ArrayList<>();
+        comments.forEach(comment -> commentInfoViews.add(convertCommentToInfoView(comment, session)));
+        return commentInfoViews;
     }
 
     public void addNotification(Comment comment) {
         notificationService.addCommentNotification(comment);
+    }
+
+    public CommentInfoView convertCommentToInfoView (Comment comment, Long session) {
+        UserInfoView user = userService.convertUser(comment.getUser());
+        PostInfoView post = postService.getPostInfoViewById(comment.getPost().getId(), session);
+        return CommentInfoView.builder()
+                .id(comment.getId())
+                .description(comment.getDescription())
+                .imagePath(comment.getImagePath())
+                .user(user)
+                .post(post)
+                .build();
     }
 }
