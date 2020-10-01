@@ -72,13 +72,14 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void addFriendToUser(Long userId, Long friendId) {
+    public void addFriendToUser(Long userId, Long friendId ,Long notificationId) {
         User friend = userRepository.getOne(friendId);
         User user = userRepository.getOne(userId);
         friend.addFriend(user);
         user.addFriend(friend);
         userRepository.save(user);
         userRepository.save(friend);
+        notificationService.deleteNotification(notificationId);
     }
 
     public void removeFriend(Long userId, Long friendId) {
@@ -104,5 +105,9 @@ public class UserService {
         User sender = userRepository.findById(friendId).orElse(null);
 
         notificationService.addFriendRequestNotification(owner,sender);
+    }
+
+    public void declineFriendRequest(Long userId, Long friendId,Long notificationId) {
+        notificationService.deleteNotification(notificationId);
     }
 }

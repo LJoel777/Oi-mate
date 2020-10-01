@@ -63,12 +63,13 @@ public class NotificationService {
         if (user!= null) {
             List<Notification> notifications= user.getNotifications();
             List<NotificationInfoView> notificationInfoViews = new ArrayList<>();
+
             notifications.forEach(not -> {
                 notificationInfoViews.add(NotificationInfoView.builder()
                         .notificationType(not.getNotificationType())
                         .ownerId(not.getOwner().getId())
                         .senderId(not.getSender().getId())
-                        .postId(not.getPost().getId())
+                        .postId(not.getPost()!=null?not.getPost().getId():null)
                         .id(not.getId())
                         .build());
             });

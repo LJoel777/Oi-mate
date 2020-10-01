@@ -10,11 +10,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("notification/")
-public class notificationController {
+public class NotificationController {
     private final NotificationService notificationService;
 
     @Autowired
-    public notificationController(NotificationService notificationService) {
+    public NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 
