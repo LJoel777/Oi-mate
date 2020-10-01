@@ -44,13 +44,14 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void addFriendToUser(Long userId, Long friendId) {
+    public void addFriendToUser(Long userId, Long friendId ,Long notificationId) {
         User friend = userRepository.getOne(friendId);
         User user = userRepository.getOne(userId);
         friend.addFriend(user);
         user.addFriend(friend);
         userRepository.save(user);
         userRepository.save(friend);
+        notificationService.deleteNotification(notificationId);
     }
 
     public void removeFriend(Long userId, Long friendId) {
@@ -78,6 +79,7 @@ public class UserService {
         notificationService.addFriendRequestNotification(owner,sender);
     }
 
+
     public UserInfoView convertUser(User user) {
         return UserInfoView.builder()
                 .id(user.getId())
@@ -89,5 +91,9 @@ public class UserService {
                 .profilePicture(user.getProfilePicture())
                 .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
                 .build();
+
+    public void declineFriendRequest(Long userId, Long friendId,Long notificationId) {
+        notificationService.deleteNotification(notificationId);
+
     }
 }

@@ -23,10 +23,20 @@ public class UserController {
         return userService.getUserInfoView(id);
     }
 
-    @GetMapping("{friendId}/add-friend/{userId}")
-    public Set<Long> addFriendToUser(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
+    @GetMapping("{friendId}/request-friend/{userId}")
+    public Set<Long> sendFriendRequest(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId) {
         userService.sendFriendRequest(userId, friendId);
         return userService.getUserInfoView(friendId).getFriends();
+    }
+
+    @GetMapping("{friendId}/add-friend/{userId}/{notificationId}")
+    public void addFriend(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId , @PathVariable("notificationId") Long notificationId ) {
+        userService.addFriendToUser(userId, friendId,notificationId);
+    }
+
+    @DeleteMapping("{friendId}/decline-request/{userId}/{notificationId}")
+    public void declineRequest(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId,@PathVariable("notificationId") Long notificationId){
+        userService.declineFriendRequest(userId,friendId,notificationId);
     }
 
     @GetMapping("{friendId}/remove-friend/{userId}")
