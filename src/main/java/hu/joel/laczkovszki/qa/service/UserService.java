@@ -91,9 +91,8 @@ public class UserService {
                 .profilePicture(user.getProfilePicture())
                 .friends(user.getFriends().stream().map(User::getId).collect(Collectors.toSet()))
                 .build();
-
+    }
     public void declineFriendRequest(Long userId, Long friendId,Long notificationId) {
         notificationService.deleteNotification(notificationId);
-
     }
 }

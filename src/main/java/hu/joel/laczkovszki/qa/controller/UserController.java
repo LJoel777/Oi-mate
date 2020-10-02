@@ -34,7 +34,7 @@ public class UserController {
         userService.addFriendToUser(userId, friendId,notificationId);
     }
 
-    @DeleteMapping("{friendId}/decline-request/{userId}/{notificationId}")
+    @GetMapping("{friendId}/decline-request/{userId}/{notificationId}")
     public void declineRequest(@PathVariable("friendId") Long friendId, @PathVariable("userId") Long userId,@PathVariable("notificationId") Long notificationId){
         userService.declineFriendRequest(userId,friendId,notificationId);
     }

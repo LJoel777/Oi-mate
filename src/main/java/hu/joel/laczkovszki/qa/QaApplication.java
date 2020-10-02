@@ -65,7 +65,7 @@ public class QaApplication {
                     .lastName("Illyes")
                     .firstName("Gergo")
                     .emailAddress("gergo@gergo.com")
-                    .profilePicture("https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/72793449_2576453445767045_7918286579754336256_n.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_ohc=7ze_ahWdAv0AX8yW9uZ&_nc_ht=scontent-vie1-1.xx&oh=4a243f16e56a977ecc3f2deb95037112&oe=5F7597D8")
+                    .profilePicture("https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/NYCS-bull-trans-C.svg/1024px-NYCS-bull-trans-C.svg.png")
                     .build();
 
             Post post1 = Post.builder()

@@ -19,9 +19,9 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    @GetMapping("friend/")
-    public UserInfoView searchFriendByUsername (@RequestParam(name = "username") String username) {
-        return searchService.getFriendByUsername(username);
+    @GetMapping("friend")
+    public Long searchFriendByUsername (@RequestParam(name = "username") String username) {
+        return (searchService.getFriendByUsername(username) == null ? null : searchService.getFriendByUsername(username).getId());
     }
 
     @GetMapping("topic/{session}")

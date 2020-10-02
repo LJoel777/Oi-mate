@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -75,7 +76,7 @@ public class PostService {
         if (user != null) {
             List<String> hobbies = user.getFieldsOfInterests();
             Set<Post> posts = postRepository.findAllByCategoriesIn(hobbies);
-            return convertPosts(posts, userId);
+            return convertPosts(posts.stream().filter(post -> !post.getUser().getId().equals(userId)).collect(Collectors.toSet()), userId);
         }
         return new HashSet<>();
     }
@@ -123,7 +124,8 @@ public class PostService {
     }
 
     public Set<PostInfoView> getPostInfoViewsByTopic(String topic, Long session) {
-        Set<Post> posts = new HashSet<>(postRepository.findPostsByCategoriesIsContaining(topic));
+        Set<Post> posts = new HashSet<>(postRepository.findAllByCategories(topic));
+//        System.out.println(postRepository.findAllByCategories(topic));
         return convertPosts(posts, session);
     }
 }

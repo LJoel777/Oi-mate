@@ -17,7 +17,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Set<Post> findAllByUserIsIn(Set<User> users);
 
-//    List<Post> findAllByCategory(String topic);
-
-    List<Post> findPostsByCategoriesIsContaining(String topic);
+    List<Post> findAllByCategories(String topic);
 }
