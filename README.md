@@ -4,7 +4,7 @@ Frontend git repo link: https://github.com/LJoel777/Q-A_react
 
 ## Description
 
-![image](./src/main/resources/images)
+![image](./src/main/resources/images/page.png)
 
 This is a simple social media app.
 
