@@ -1,9 +1,10 @@
 package hu.joel.laczkovszki.qa.dao.implementation;
 
 import hu.joel.laczkovszki.qa.dao.AnswerDao;
-import hu.joel.laczkovszki.qa.dao.QuestionDao;
+import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.exception.ApiRequestException;
 import hu.joel.laczkovszki.qa.model.Answer;
+import hu.joel.laczkovszki.qa.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class AnswerDaoMem implements AnswerDao {
     private static List<Answer> answers;
-    private final QuestionDao questionDao;
+    private final CRUDInterface<Question> questionDao;
 
     @Autowired
     public static void setAnswers(List<Answer> answers) {
@@ -21,7 +22,7 @@ public class AnswerDaoMem implements AnswerDao {
     }
 
     @Autowired
-    public AnswerDaoMem(QuestionDao questionDao) {
+    public AnswerDaoMem(QuestionDaoMem questionDao) {
         this.questionDao = questionDao;
     }
 
@@ -45,17 +46,20 @@ public class AnswerDaoMem implements AnswerDao {
         answers.remove(answers.stream()
                 .filter((answer -> answer.getId() == id))
                 .findFirst()
-                .orElseThrow(() -> new ApiRequestException("Answer id found" + "(" + id + ")")));
+                .orElseThrow(() -> new ApiRequestException("Answer id not found" + "(" + id + ")")));
     }
 
     @Override
     public void update(int id, Answer updateAnswer) {
-        Answer answer = find(id);
-        int questionId = updateAnswer.getQuestionId();
-        questionDao.find(questionId);
+        find(id);
         remove(id);
         updateAnswer.setId(id);
         answers.add(updateAnswer);
+    }
+
+    @Override
+    public List<Answer> getAll() {
+        return null;
     }
 
     @Override
@@ -71,6 +75,6 @@ public class AnswerDaoMem implements AnswerDao {
         List<Answer> deletedAnswers = answers.stream()
                 .filter((answer -> answer.getQuestionId() == questionId)).collect(Collectors.toList());
         if (deletedAnswers.size() > 0)
-            deletedAnswers.stream().forEach(answer -> remove(answer.getId()));
+            deletedAnswers.forEach(answer -> remove(answer.getId()));
     }
 }

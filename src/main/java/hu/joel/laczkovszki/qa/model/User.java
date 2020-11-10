@@ -1,24 +1,48 @@
 package hu.joel.laczkovszki.qa.model;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
-    private UUID id;
+    private int id;
+
     private String userName;
     private String psw;
-    private String emailAdress;
+    private String emailAddress;
     private String firstName;
     private String lastName;
-    private String profilePicture;
+    private String profilePicture = "https://lh3.googleusercontent.com/proxy/ShuDBfPQfNl63y3eaigj4OR4TNdzoTQYUFkHj_SB4-7chXH0adj2TBBAn5eX9N3xRWi6JyuO1gXMmjmBBgvZUqpNJGovLcLtL8fiSVtJQ-yNQmbi8mH6Lpw";
+    private List<String> fieldsOfInterest;
+    private List<Integer> friends;
+    private static int idCounter = 0;
 
-    public User(String userName, String psw, String emailAdress, String firstName, String lastName, String profilePicture) {
+    public User(String userName, String psw, String emailAddress, String firstName, String lastName, String profilePicture, List<String> fieldsOfInterest, List<Integer> friends) {
         this.userName = userName;
         this.psw = psw;
-        this.emailAdress = emailAdress;
+        this.emailAddress = emailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profilePicture = profilePicture;
-        this.id = UUID.randomUUID();
+        if (!profilePicture.equals(""))
+            this.profilePicture = profilePicture;
+        this.fieldsOfInterest = fieldsOfInterest;
+        this.friends = friends != null ? friends : new ArrayList<>();
+        this.id = idCounter++;
+    }
+
+    public List<String> getFieldsOfInterest() {
+        return fieldsOfInterest;
+    }
+
+    public void setFieldsOfInterest(List<String> fieldsOfInterest) {
+        this.fieldsOfInterest = fieldsOfInterest;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -37,12 +61,12 @@ public class User {
         this.psw = psw;
     }
 
-    public String getEmailAdress() {
-        return emailAdress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmailAdress(String emailAdress) {
-        this.emailAdress = emailAdress;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getFirstName() {
@@ -67,5 +91,17 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<Integer> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Integer> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriend(Integer id) {
+        this.friends.add(id);
     }
 }

@@ -18,6 +18,16 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
+    @GetMapping("/hobby-news/{id}")
+    public List<Question> getQuestionByHobby (@PathVariable("id") int id) {
+        return questionService.getQuestionByHobby(id);
+    }
+
+    @GetMapping("/friend-news/{id}")
+    public List<Question> getQuestionsByFriend (@PathVariable("id") int id) {
+        return questionService.getQuestionByFriend(id);
+    }
+
     @GetMapping("/questions")
     public List<Question> getQuestions() {
         return questionService.getAllQuestion();
@@ -43,5 +53,10 @@ public class QuestionController {
     public String removeQuestion(@PathVariable("id") int id) {
         questionService.removeQuestionById(id);
         return "/answersByQuestionId/{questionId}/remove";
+    }
+
+    @GetMapping("questions-by-user-id/{userId}")
+    public List<Question> getQuestions_byUserId(@PathVariable("userId") int userId) {
+        return questionService.getAllQuestion_byUserId(userId);
     }
 }

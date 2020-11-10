@@ -10,7 +10,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AnswerController {
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
     @Autowired
     public AnswerController(AnswerService answerService) {
@@ -34,8 +34,9 @@ public class AnswerController {
     }
 
     @PostMapping("/answer/{id}/update")
-    public void updateAnswer(@PathVariable("id") int id, @RequestBody Answer answer) {
+    public int updateAnswer(@PathVariable("id") int id, @RequestBody Answer answer) {
         answerService.updateAnswerById(id, answer);
+        return answer.getQuestionId();
     }
 
     @GetMapping("/answer/{id}/remove")

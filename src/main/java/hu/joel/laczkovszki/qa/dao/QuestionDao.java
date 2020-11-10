@@ -1,19 +1,13 @@
 package hu.joel.laczkovszki.qa.dao;
 
+import hu.joel.laczkovszki.qa.dao.CRUDInterface;
 import hu.joel.laczkovszki.qa.model.Question;
-import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
-@Component
-public interface QuestionDao {
-    void add(Question question);
+public interface QuestionDao  extends CRUDInterface<Question> {
+    List<Question> getAllQuestion_byUserId(int userId);
 
-    Question find(int id);
-
-    void remove(int id);
-
-    void update(int id, Question question);
-
-    List<Question> getAll();
+    List<Question> getQuestionsByHobby(String hobby);
 }
